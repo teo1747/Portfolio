@@ -1,0 +1,36 @@
+% Ingénieur logiciel et matériel embarqué — français
+% Compiler avec XeLaTeX (latexmkrc s'en charge, y compris sur Overleaf).
+\documentclass[10pt]{article}
+\usepackage{cvstyle}
+\usepackage{babel}
+\babelprovide[import, main, hyphenrules=french]{french} % French hyphenation and dates
+\hwvarianttrue
+\hypersetup{pdftitle={CV - Junior Deogracias Mambo Motsou - Ingénieur logiciel et matériel embarqué},
+  pdfauthor={Junior Deogracias Mambo Motsou},
+  pdfkeywords={systèmes embarqués, firmware, C, STM32, FreeRTOS, Zephyr, LIN, VHDL, FPGA, mise en route matérielle}}
+\renewcommand{\cvfootername}{J.\,D. Mambo Motsou --- Ingénieur logiciel et matériel embarqué}
+\input{fr/blocks}
+
+\begin{document}
+\BlkHeader{Ingénieur logiciel et matériel embarqué}
+\BlkProfile
+\BlkSkillsHW
+
+\section{Expérience professionnelle}
+\BlkForvia
+\BlkKmutt
+
+\section{Projets académiques et personnels}
+\cvgroup{Polytech Dijon}
+\BlkAcadTherm
+\BlkAcadSram
+\BlkAcadVideo
+\BlkAcadFilter
+\cvgroup{Personnels}
+\BlkPersonalNote
+\BlkRtos
+\BlkAccess
+
+\BlkEducation
+\BlkLanguages
+\end{document}

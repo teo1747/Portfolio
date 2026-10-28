@@ -1,0 +1,41 @@
+# Skills, grouped. Keep each line to things a project or job on this site backs up.
+
+[[group]]
+group = { en = "Microcontrollers", fr = "Microcontrôleurs" }
+items = "STM32 (F446RE, G474RE), Infineon TLD4020 (Cortex-M23), Melexis MLX81116 / MLX81143, RP2040 with PIO, PIC32MZ, PIC24, ATmega328P"
+
+[[group]]
+group = "Firmware"
+items = { en = "C on bare metal and over vendor SDKs, register-level drivers with CMSIS, interrupts and timers, ADC acquisition, PWM, state machines", fr = "C en bare-metal et sur SDK constructeur, drivers au niveau registre avec CMSIS, interruptions et timers, acquisition ADC, PWM, machines d'états" }
+
+[[group]]
+group = { en = "RTOS and operating systems", fr = "RTOS et systèmes d'exploitation" }
+items = { en = "FreeRTOS (tasks, queues, semaphores, mutexes, event groups, stream buffers), Zephyr (devicetree, Kconfig, West); kernel internals: scheduling, context switching, paging, interrupts, system calls, filesystems", fr = "FreeRTOS (tâches, queues, sémaphores, mutex, event groups, stream buffers), Zephyr (devicetree, Kconfig, West) ; fonctionnement interne d'un noyau : ordonnancement, changement de contexte, pagination, interruptions, appels système, systèmes de fichiers" }
+
+[[group]]
+group = { en = "Buses and protocols", fr = "Bus et protocoles" }
+items = { en = "LIN, MeLiBu, UART, SPI, I²C, AXI4-Stream, Bluetooth serial with JSON commands, ISO 14443-A (MIFARE), REST/HTTP", fr = "LIN, MeLiBu, UART, SPI, I²C, AXI4-Stream, Bluetooth série avec commandes JSON, ISO 14443-A (MIFARE), REST/HTTP" }
+
+[[group]]
+group = { en = "Digital design", fr = "Conception numérique" }
+items = { en = "VHDL (state machines, pipelined datapaths, bidirectional I/O), Vivado (synthesis, implementation, IP integrator, ILA), Vitis HLS, XSim; Artix-7 and Zynq-7000", fr = "VHDL (machines d'états, chemins de données pipelinés, E/S bidirectionnelles), Vivado (synthèse, implémentation, IP integrator, ILA), Vitis HLS, XSim ; Artix-7 et Zynq-7000" }
+
+[[group]]
+group = { en = "Electronics", fr = "Électronique" }
+items = { en = "Schematic capture and PCB design (KiCad, Proteus), sensor interfacing (NTC thermistors, I²C and SPI sensors), evaluation-board bring-up from datasheets", fr = "Saisie de schémas et routage PCB (KiCad, Proteus), interfaçage de capteurs (CTN, capteurs I²C et SPI), mise en route de cartes d'évaluation à partir des datasheets" }
+
+[[group]]
+group = { en = "Build and toolchains", fr = "Build et toolchains" }
+items = { en = "GCC (arm-none-eabi, x86_64-elf cross), Clang, linker scripts, CMake, Ninja, GNU Make, Kconfig; IAR Embedded Workbench, MPLAB X with XC16/XC32, Harmony v3 and MCC, Pico SDK", fr = "GCC (arm-none-eabi, cross x86_64-elf), Clang, scripts d'édition de liens, CMake, Ninja, GNU Make, Kconfig ; IAR Embedded Workbench, MPLAB X avec XC16/XC32, Harmony v3 et MCC, Pico SDK" }
+
+[[group]]
+group = { en = "Debug and test", fr = "Debug et test" }
+items = { en = "J-Link, ST-LINK, PICkit on-board debugger, GDB (remote and on QEMU), serial consoles, ILA; QEMU; unit tests under ASan/UBSan, conformance and differential tests, GitHub Actions CI", fr = "J-Link, ST-LINK, débogueur PICkit embarqué, GDB (distant et sur QEMU), consoles série, ILA ; QEMU ; tests unitaires sous ASan/UBSan, tests de conformité et différentiels, CI GitHub Actions" }
+
+[[group]]
+group = { en = "Linux", fr = "Linux" }
+items = { en = "Ubuntu as daily development host; user-space drivers through spidev, i2c-dev and sysfs GPIO on Raspberry Pi", fr = "Ubuntu comme poste de développement ; drivers en espace utilisateur via spidev, i2c-dev et GPIO sysfs sur Raspberry Pi" }
+
+[[group]]
+group = { en = "Languages", fr = "Langages" }
+items = { en = "C, Python, C++ (Qt), Kotlin (Android, Jetpack Compose), VHDL; x86-64, Arm Thumb and RISC-V assembly", fr = "C, Python, C++ (Qt), Kotlin (Android, Jetpack Compose), VHDL ; assembleur x86-64, Arm Thumb et RISC-V" }

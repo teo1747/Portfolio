@@ -1,0 +1,57 @@
+# Interface strings. Rarely need editing.
+
+skip = { en = "Skip to content", fr = "Aller au contenu" }
+nav_label = { en = "Sections", fr = "Sections" }
+switch_to = { en = "Lire en français :", fr = "Read in English:" }
+download_cv = { en = "Download CV", fr = "Télécharger le CV" }
+email_me = { en = "Email me", fr = "M'écrire" }
+email = { en = "Email", fr = "E-mail" }
+org = { en = "Project organisation", fr = "Organisation des projets" }
+footer = { en = "Embedded systems engineer", fr = "Ingénieur systèmes embarqués" }
+site_source = { en = "Source of this site", fr = "Code source du site" }
+filter_label = { en = "Show projects", fr = "Afficher les projets" }
+all = { en = "All", fr = "Tous" }
+details = { en = "Problem, contribution, tools and outcome", fr = "Problème, contribution, outils et résultat" }
+problem = { en = "Problem", fr = "Problème" }
+contribution = { en = "What I did", fr = "Ce que j'ai fait" }
+environment = { en = "Technical environment", fr = "Environnement technique" }
+outcome = { en = "Outcome", fr = "Résultat" }
+source = { en = "Source code on GitHub", fr = "Code source sur GitHub" }
+domains_label = { en = "Domains", fr = "Domaines" }
+
+[lang_name]
+en = { en = "English", fr = "English" }
+fr = { en = "Français", fr = "Français" }
+
+[nav]
+profile = { en = "Profile", fr = "Profil" }
+experience = { en = "Experience", fr = "Expérience" }
+projects = { en = "Projects", fr = "Projets" }
+skills = { en = "Skills", fr = "Compétences" }
+education = { en = "Education", fr = "Formation" }
+cv = { en = "CV", fr = "CV" }
+contact = { en = "Contact", fr = "Contact" }
+
+[categories]
+professional = { en = "Professional", fr = "Professionnel" }
+academic = { en = "Academic", fr = "Académique" }
+personal = { en = "Personal", fr = "Personnel" }
+
+[domains]
+firmware = "Firmware"
+rtos = "RTOS"
+os = { en = "Operating systems", fr = "Systèmes d'exploitation" }
+fpga = "FPGA / VHDL"
+automotive = { en = "Automotive", fr = "Automobile" }
+bringup = { en = "Hardware bring-up", fr = "Mise en route matérielle" }
+software = { en = "Application software", fr = "Logiciel applicatif" }
+vision = { en = "Image processing", fr = "Traitement d'image" }
+tooling = { en = "Toolchains and tooling", fr = "Toolchains et outillage" }
+
+[env]
+hw = { en = "Hardware", fr = "Matériel" }
+os = { en = "OS / RTOS", fr = "OS / RTOS" }
+lang = { en = "Languages", fr = "Langages" }
+tools = { en = "Tools", fr = "Outils" }
+proto = { en = "Protocols", fr = "Protocoles" }
+test = { en = "Testing", fr = "Tests" }

@@ -1,0 +1,40 @@
+# Professional experience, most recent first.
+# The detailed write-ups live in projects.toml; "work" items here link to them by id.
+
+[[job]]
+dates = { en = "Sep. 2025 – Sep. 2026", fr = "sept. 2025 – sept. 2026" }
+role = { en = "Embedded systems engineer, apprentice", fr = "Ingénieur systèmes embarqués en alternance" }
+org = "FORVIA – Faurecia Interior Systems"
+place = { en = "Surface Activation department, France", fr = "Département Surface Activation, France" }
+summary.en = """
+Contrat de professionnalisation in the final year of my engineering degree. Three projects: firmware bring-up of a
+LIN-controlled heating-element controller, a MeLiBu LED driver port, and the software of an interior ambient-lighting demonstrator.
+"""
+summary.fr = """
+Contrat de professionnalisation pendant ma dernière année d'école. Trois projets : mise en route du firmware d'un contrôleur
+d'élément chauffant piloté en LIN, portage d'un driver LED MeLiBu, et logiciel d'un démonstrateur d'éclairage d'ambiance intérieur.
+"""
+[[job.work]]
+title = { en = "[TCU heater controller firmware](#p-tcu): Infineon TLD4020, LIN, PWM-synchronised ADC", fr = "[Firmware du contrôleur de chauffe TCU](#p-tcu) : Infineon TLD4020, LIN, ADC synchronisé sur la PWM" }
+[[job.work]]
+title = { en = "[MeLiBu LED driver port](#p-melibu): MLX81116 to MLX81143 on RP2040", fr = "[Portage du driver LED MeLiBu](#p-melibu) : MLX81116 vers MLX81143 sur RP2040" }
+[[job.work]]
+title = { en = "[Ambient-lighting demonstrator](#p-lighting): nine UART gateways, Python and Android control", fr = "[Démonstrateur d'éclairage d'ambiance](#p-lighting) : neuf gateways UART, pilotage Python et Android" }
+
+[[job]]
+dates = { en = "Apr. – Aug. 2025", fr = "avr. – août 2025" }
+role = { en = "Embedded systems intern", fr = "Stagiaire systèmes embarqués" }
+org = "KMUTT – MDT Lab"
+place = { en = "Bangkok, Thailand", fr = "Bangkok, Thaïlande" }
+summary.en = """
+Four-month research internship abroad. Image processing for a precision-agriculture project, and a self-directed
+FPGA ramp-up in VHDL.
+"""
+summary.fr = """
+Stage de recherche de quatre mois à l'étranger. Traitement d'image pour un projet d'agriculture de précision, et montée
+en compétence FPGA en VHDL, en autonomie.
+"""
+[[job.work]]
+title = { en = "[Fruit classification](#p-fruit): VGG16 transfer learning, OpenCV detection", fr = "[Classification de fruits](#p-fruit) : transfer learning VGG16, détection OpenCV" }
+[[job.work]]
+title = { en = "[8-bit microcontroller in VHDL](#p-mcu8)", fr = "[Microcontrôleur 8 bits en VHDL](#p-mcu8)" }

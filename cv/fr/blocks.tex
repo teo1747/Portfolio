@@ -1,0 +1,264 @@
+% =====================================================================
+%  fr/blocks.tex — tous les blocs du CV, rédigés une seule fois, en français.
+%  Les fichiers de variante (cv-*-fr.tex) choisissent les blocs et leur ordre.
+%  Dans un bloc :
+%     \HW{...}  n'apparaît que dans le CV « Ingénieur logiciel et matériel embarqué »
+%     \SW{...}  n'apparaît que dans le CV « Ingénieur logiciel embarqué »
+%  Les termes techniques anglais d'usage courant (thread, gateway, buck…) sont conservés.
+% =====================================================================
+
+% ---------------------------------------------------------------- en-tête
+\newcommand{\BlkHeader}[1]{%
+  \cvheader{Junior Deogracias MAMBO MOTSOU}{#1}
+  {\href{mailto:motsoujunior17@gmail.com}{motsoujunior17@gmail.com}\sep
+   \phone\sep France\sep \availability}
+  {\href{https://teo1747.github.io/Portfolio/}{teo1747.github.io/Portfolio}\sep
+   \href{https://github.com/teo1747}{github.com/teo1747}\sep
+   \href{https://www.linkedin.com/in/teo1747}{linkedin.com/in/teo1747}}}
+\newcommand{\phone}{+33 6 01 16 86 06}
+\newcommand{\availability}{Disponible immédiatement}
+
+% ---------------------------------------------------------------- profil
+\newcommand{\BlkProfile}{%
+\section{Profil}
+\HW{Ingénieur systèmes embarqués (Polytech Dijon, 2026) couvrant firmware, électronique et matériel numérique. Chez FORVIA, j'ai mené la mise en route du firmware sur de nouveaux composants
+automobiles (contrôleur de chauffe LIN, nœuds LED MeLiBu) et développé le logiciel d'un démonstrateur
+d'éclairage à neuf gateways. Je travaille à partir des datasheets, je localise les défauts côté matériel
+ou logiciel et je valide sur banc ; la conception VHDL/FPGA complète ce profil.}%
+\SW{Ingénieur logiciel embarqué (Polytech Dijon, 2026) spécialisé en firmware C, systèmes d'exploitation
+temps réel et outillage associé. Chez FORVIA, j'ai développé et débogué du firmware pour
+microcontrôleurs automobiles ainsi qu'une chaîne de pilotage multithread Python/Kotlin pour un démonstrateur
+d'éclairage. Dans mes projets personnels, je développe un RTOS, un OS x86-64 et une chaîne de compilation C,
+avec un soin particulier pour le build, la CI et les tests.}\par}
+
+% ---------------------------------------------------------------- compétences
+\newcommand{\BlkSkillsHW}{%
+\section{Compétences techniques}
+\cvskill{Microcontrôleurs}{STM32 (F446RE, G474RE), Infineon TLD4020 (Cortex-M23), Melexis MLX81116/MLX81143,
+  RP2040 (PIO), PIC32MZ, PIC24, ATmega328P}
+\cvskill{Firmware}{C (bare-metal, registres via CMSIS, HAL/SDK), FreeRTOS, Zephyr, interruptions et timers,
+  acquisition ADC, PWM, machines d'états}
+\cvskill{Bus \& protocoles}{LIN, MeLiBu, UART, SPI, I²C, AXI4-Stream, Bluetooth série, ISO 14443-A (MIFARE)}
+\cvskill{FPGA \& VHDL}{VHDL (machines d'états, chemins de données pipelinés, IOBUF bidirectionnel),
+  Vivado (synthèse, implémentation, IP integrator, ILA), Vitis HLS, XSim ; Artix-7, Zynq-7000}
+\cvskill{Électronique}{Schéma et routage PCB (KiCad, Proteus), interfaçage capteurs (CTN, capteurs I²C/SPI),
+  mise en route de cartes d'évaluation}
+\cvskill{Debug \& outils}{J-Link, ST-LINK, débogueur PICkit embarqué, GDB, consoles série ; IAR EWARM,
+  MPLAB X + Harmony v3/MCC, STM32CubeProgrammer, Pico SDK ; Git, CMake, Ninja, West}
+\cvskill{Logiciel}{Python (PyQt5, OpenCV, threading), C++/Qt, Kotlin (Android, Jetpack Compose)}\par}
+
+\newcommand{\BlkSkillsSW}{%
+\section{Compétences techniques}
+\cvskill{Langages}{C (C99/C11), Python, C++ (Qt), Kotlin ; assembleur : x86-64 (NASM), Arm Thumb, RISC-V}
+\cvskill{RTOS \& OS}{FreeRTOS (tâches, queues, mutex, event groups, stream buffers), Zephyr (devicetree,
+  Kconfig), bare-metal ; noyau : ordonnancement, commutation de contexte, pagination, interruptions, syscalls}
+\cvskill{Linux}{Ubuntu au quotidien ; drivers en espace utilisateur (spidev, i2c-dev, GPIO sysfs) sur Raspberry Pi}
+\cvskill{Build \& toolchains}{GCC (arm-none-eabi, cross x86\_64-elf), Clang, scripts d'édition de liens,
+  CMake, Ninja, GNU Make, West, Kconfig ; IAR EWARM, MPLAB X (XC16/XC32)}
+\cvskill{Debug \& tests}{GDB (distant, QEMU), J-Link, QEMU ; tests unitaires sous ASan/UBSan, tests de
+  conformité et tests différentiels contre des modèles de référence}
+\cvskill{Automatisation}{Git (workflow par pull requests), CI GitHub Actions, outillage Python}
+\cvskill{Interfaces}{UART, SPI, I²C, LIN, MeLiBu, Bluetooth série avec protocole JSON, clients REST/HTTP}
+\cvskill{Applications}{Python multithread (PyQt5, OpenCV), Qt/C++, Android (Kotlin, Jetpack Compose)}\par}
+
+% ---------------------------------------------------------------- FORVIA
+\newcommand{\BlkForvia}{%
+\cventry{Ingénieur systèmes embarqués --- contrat de professionnalisation}
+  {FORVIA -- Faurecia Interior Systems}{département Surface Activation, France}{\forviadates}
+\HW{\BlkForviaTCU\BlkForviaMeli\BlkForviaLight}%
+\SW{\BlkForviaLight\BlkForviaTCU\BlkForviaMeli}}
+\newcommand{\forviadates}{sept.\ 2025 -- sept.\ 2026}
+
+\newcommand{\BlkForviaTCU}{%
+\cvsub{Mise en route firmware : contrôleur d'élément chauffant piloté en LIN (TCU)}
+\begin{itemize}
+  \item Développement du firmware C sur Infineon TLD4020-3ET (Arm Cortex-M23 avec LIN intégré) :
+    commandes ON/OFF par LIN, PWM de chauffe via le périphérique LDRV, régulation de température par CTN,
+    protections, architecture en machine d'états.
+  \item Diagnostic des blocages de mise en route : HardFault à l'initialisation causé par une révision de
+    silicium différente sur la carte d'évaluation (registre absent) ; perte du debug liée au cavalier de
+    boot et à l'alimentation USB.
+  \item Le pont diviseur de la CTN étant alimenté par la sortie de chauffe commutée, le nœud ADC est un
+    signal carré à 100\,Hz pendant la PWM : échantillonnage synchronisé sur le temps haut (ISR à
+    mi-impulsion, moyenne sur 16 mesures), qui a ramené la dispersion dans les limites du besoin de régulation.
+\end{itemize}
+\cvenv{Environnement\,:}{carte TLD4020-3STD\_EVAL, IAR Embedded Workbench, Infineon MCU Configuration Wizard,
+  J-Link embarqué, printf sur LIN (MobaXterm, 19\,200 bauds 8N1)}}
+
+\newcommand{\BlkForviaMeli}{%
+\cvsub{Portage du driver LED MeLiBu : Melexis MLX81116 vers MLX81143}
+\begin{itemize}
+  \item Portage d'un driver MeLiBu~1.x existant sur RP2040 vers le MLX81143 : encodage de sous-adresse en
+    mode étendu (14 LED par nœud), encodage PWM linéaire 15 bits vérifié sur datasheet et sur matériel ;
+    panneau 22 × 7 (154 LED RVB).
+  \item Correction des défauts de timing bus : génération du break en attente active sous interruptions
+    masquées, section critique réduite au seul break pour ne plus perdre d'octets en réception UART,
+    vidage de la FIFO TX avant chaque trame pour éviter les collisions ; correction de la broche de retour bus.
+  \HW{\item Correction du câblage désordonné des LED dans la couche de mapping matériel, séparée de la
+    convention d'entrée ; récepteur PIO utilisé pour confirmer les acquittements des esclaves.}
+\end{itemize}
+\cvenv{Environnement\,:}{RP2040, Raspberry Pi Pico SDK, machines d'états PIO, C, MeLiBu~1.x}}
+
+\newcommand{\BlkForviaLight}{%
+\cvsub{Démonstrateur d'éclairage d'ambiance intérieur (responsable logiciel)}
+\begin{itemize}
+  \item Extension du logiciel de pilotage d'un buck de démonstration intérieur automobile, de quelques
+    afficheurs LED à neuf gateways UART STM32 pilotant des rubans WS2812 répartis en plusieurs zones.
+  \item Application Python/PyQt5 multithread : décodage des animations MP4 avec OpenCV, correspondance entre
+    identifiants LED et pixels de la frame, envoi de chaque frame par un thread par gateway à 921\,600 bauds,
+    synchronisés par une barrière ; trames série propriétaires (ASCII avec compression delta).
+  \item Application tablette Android (Kotlin, Jetpack Compose) qui pilote zones, couleurs et presets de
+    luminosité en Bluetooth série, via un protocole de commandes JSON avec codes d'erreur ; mode de secours au clavier.
+  \item Adaptation minimale du firmware des gateways STM32 (filtrage par décalage d'ID si deux gateways partagent une UART).
+\end{itemize}
+\cvenv{Environnement\,:}{Python 3, PyQt5, OpenCV, Kotlin/Jetpack Compose, STM32 (C), WS2812, UART, Bluetooth SPP, Git}}
+
+% ---------------------------------------------------------------- KMUTT
+\newcommand{\BlkKmutt}{%
+\cventry{Stagiaire systèmes embarqués}{KMUTT --- MDT Lab}{Bangkok, Thaïlande}{avr.\ -- août 2025}
+\begin{itemize}
+  \item Traitement d'image pour un projet d'agriculture de précision : classification de fruits par transfer
+    learning sur VGG16 (Keras/TensorFlow), 98,4\,\% de bonnes classifications sur un jeu de test de 4\,599 images
+    (Fruits-360, 131 classes), et chaîne de détection OpenCV par contours et couleurs.
+  \HW{\item Montée en compétence FPGA : conception d'un microcontrôleur 8 bits en VHDL (unité de contrôle
+    fetch--decode--execute à 12 états, ALU avec drapeaux NZVC, ROM/RAM/E-S mappées en mémoire) d'après
+    l'architecture de référence de LaMeres ; simulé sous Vivado 2024.2 / XSim.}
+\end{itemize}
+\cvenv{Environnement\,:}{Python, TensorFlow/Keras, OpenCV\HW{, VHDL, Vivado 2024.2}}}
+
+% ---------------------------------------------------------------- projets académiques
+\newcommand{\BlkAcadTherm}{%
+\cvproject{Thermomètre temps réel : PIC24 bare-metal, puis FreeRTOS sur PIC32MZ}{Polytech, seul puis en binôme}{2025 -- 2026}{github.com/teo1747/pic24-32-rt-thermometer}
+\begin{itemize}
+  \item V1 (seul) : PIC24FJ1024GB610 en bare-metal, horodatage RTCC et journalisation en EEPROM SPI.
+    V2 (binôme) : chaîne FreeRTOS de tâches acquisition, analyse et affichage sur PIC32MZ2048EFH100, reliée par
+    des queues et des sémaphores binaires ; messages horodatés ; bascule °C/°F par bouton.
+\end{itemize}
+\cvenv{Environnement\,:}{Explorer 16/32, MPLAB X, XC16/XC32, Harmony v3/MCC, FreeRTOS 10.5, capteur TC1047A, débogueur embarqué}}
+
+\newcommand{\BlkAcadZephyr}{%
+\cvproject{Étude de faisabilité Zephyr RTOS sur STM32}{TP Polytech}{2025 -- 2026}{github.com/teo1747/zephyr-stm32-sensor-hub}
+\begin{itemize}
+  \item Trois threads se partagent un bus I²C : BMP280 (température/pression), MPU6050 (centrale inertielle
+    6 axes) et OLED SSD1306 via l'API display et CFB ; données partagées protégées par mutex ; carte
+    décrite en overlay devicetree (dépôt reconstruit d'après le rapport).
+\end{itemize}
+\cvenv{Environnement\,:}{NUCLEO-G474RE, Zephyr, West, CMake, Ninja, STM32CubeProgrammer, console série}}
+
+\newcommand{\BlkAcadSram}{%
+\cvproject{Contrôleur de SRAM ZBT en VHDL}{cours SoC Polytech, binôme}{2025 -- 2026}{github.com/teo1747/vhdl-zbt-sram-controller}
+\begin{itemize}
+  \item Contrôleur à machine d'états pour une SRAM ZBT Micron 512K × 36 : lectures/écritures simples
+    et en rafale de 4 mots sur un bus bidirectionnel de 36 bits (IOBUF Xilinx) ; banc de test
+    auto-vérifiant contre le modèle Micron.
+\end{itemize}
+\cvenv{Environnement\,:}{VHDL, Vivado, cible Zynq-7000, modèle de simulation Micron}}
+
+\newcommand{\BlkAcadVideo}{%
+\cvproject{Chaîne vidéo VGA temps réel sur ZedBoard}{Polytech, binôme}{2025 -- 2026}{github.com/teo1747/zedboard-vga-video-pipeline}
+\begin{itemize}
+  \item Chaîne 640 × 480 assemblée sous IP integrator : Clocking Wizard, Video Timing Controller, IP vidéo
+    AXI4-Stream, inverseur VHDL et IP d'incrustation Vitis HLS. Synchros vérifiées sur carte à l'ILA ;
+    la démo finale n'affichait pas d'image faute de maître AXI-Lite pour démarrer les IP HLS, depuis
+    rendues autonomes (nouveau test sur carte à faire).
+\end{itemize}
+\cvenv{Environnement\,:}{Zynq-7000 (xc7z020), Vivado/Vitis HLS 2022.2, ILA, contraintes XDC}}
+
+\newcommand{\BlkAcadFilter}{%
+\cvproject{Filtre d'image 3×3 sur FPGA}{Polytech, seul}{nov.\ 2024 -- janv.\ 2025}{github.com/teo1747/vhdl-2d-image-filter}
+\begin{itemize}
+  \item Filtres moyenneur et gaussien (1-2-1/2-4-2/1-2-1) en flux sur pixels 8 bits : line buffers sur
+    l'IP FIFO Generator, arbre d'additionneurs pipeliné avec croissance en bits explicite
+    (9, 10 puis 11 bits) ; simulation complète sur l'image Lena, sorties comparées à une référence logicielle.
+\end{itemize}
+\cvenv{Environnement\,:}{VHDL, Vivado 2024.1, Artix-7 (xc7a100t), XSim, MATLAB}}
+
+\newcommand{\BlkAcadTemp}{%
+\cvproject{Moniteur de température sur FPGA}{Polytech, binôme}{2024 -- 2025}{github.com/teo1747/nexys4ddr-temperature-monitor}
+\begin{itemize}
+  \item Intégration de cœurs I²C (400\,kHz) et UART (115\,200 bauds) pour lire l'ADT7420 de la carte et l'afficher
+    sur les afficheurs 7 segments ; timing tenu à 100\,MHz (WNS +5,4\,ns, 1\,936 LUT) sur Nexys 4 DDR.
+\end{itemize}}
+
+\newcommand{\BlkAcadMifare}{%
+\cvproject{Porte-monnaie MIFARE Classic}{Polytech, seul}{oct.\ -- nov.\ 2024}{github.com/teo1747/mifare-classic-wallet-qt}
+\begin{itemize}
+  \item Application Qt/C++ : lecture/écriture de l'identité sur la carte et solde en bloc valeur avec bloc
+    de sauvegarde, séparation des droits clé A/clé B ; testée avec un lecteur USB ODALID sur cartes physiques.
+\end{itemize}}
+
+\newcommand{\BlkAcadRpi}{%
+\cvproject{Périphériques sous Linux embarqué sur Raspberry Pi}{Polytech, équipe}{mars 2025}{}
+\begin{itemize}
+  \item Drivers C en espace utilisateur pour modules Pmod : capteur de lumière SPI via spidev (mode 3, 2\,MHz),
+    capteur d'humidité I²C via i2c-dev, GPIO via sysfs ; compilation par Make.
+\end{itemize}}
+
+% ---------------------------------------------------------------- projets personnels
+\newcommand{\BlkPersonalNote}{%
+\vspace{1pt}{\fontsize{8.4pt}{10.6pt}\selectfont\color{muted}En cours. Je définis l'architecture, les
+spécifications et la stratégie de vérification ; l'implémentation est assistée par des outils de
+programmation IA. Validation à ce stade en émulation (QEMU, EmbSIM), pas encore sur cartes physiques.\par}}
+
+\newcommand{\BlkRtos}{%
+\cvproject{EmbLinkRTOS --- RTOS préemptif pour microcontrôleurs}{personnel}{depuis oct.\ 2026}{github.com/EmbLinkOs/EmbLinkRTOS}
+\begin{itemize}
+  \item Ordonnanceur préemptif à priorités fixes (bitmap de listes prêtes, FIFO à priorité égale) ;
+    port Cortex-M (commutation PendSV/PSP, sauvegarde FPU paresseuse, sections critiques BASEPRI),
+    ports RISC-V et AVR.
+  \item Sémaphores, mutex avec héritage et plafond de priorité, timeouts ; tests de conformité et
+    différentiels contre un modèle Python de l'ordonnanceur.
+  \item Build CMake/Kconfig avec définitions de cartes (NUCLEO-F446RE, Arduino Uno, ESP32-C3) ; CI GitHub
+    Actions avec ASan/UBSan/TSan, exécutions QEMU et EmbSIM.
+\end{itemize}}
+
+\newcommand{\BlkEmbLinkOS}{%
+\cvproject{EmbLinkOS --- système d'exploitation x86-64 écrit de zéro}{personnel}{depuis mai 2026}{github.com/EmbLinkOs/EmbLinkOs}
+\begin{itemize}
+  \item Bootloader BIOS en deux étages en NASM (mode réel, protégé, puis long) et chargeur UEFI PE32+ ;
+    noyau higher-half en C : pagination 4 niveaux, APIC/IO-APIC, SMP, processus ring 3, appels système, chargeur ELF.
+  \item Système de fichiers B-tree copy-on-write (CRC32C, snapshots, AES-XTS) vérifié contre un oracle
+    Python ; FAT32, VFS ; drivers PCI, AHCI, NVMe et USB ; portages de newlib et TCC.
+  \item Autotests noyau, tests unitaires hôte sous ASan/UBSan, tests d'intégration pilotés sous QEMU ; debug GDB distant.
+\end{itemize}}
+
+\newcommand{\BlkEmbCC}{%
+\cvproject{EmbCC --- chaîne de compilation croisée C}{personnel}{depuis juil.\ 2026}{github.com/EmbLinkOs/EmbCC}
+\begin{itemize}
+  \item Compilateur C99, assembleur et éditeur de liens avec back-ends Cortex-M, RISC-V, AVR et x86-64 ;
+    utilitaires firmware (génération d'en-têtes/startup depuis SVD, empaquetage HEX/UF2).
+  \item Vérification : encodages comparés à llvm-mc/GNU as, code généré exécuté sous QEMU et comparé à
+    GCC/Clang ; CI GitHub Actions sous Linux et macOS avec GCC et Clang.
+\end{itemize}}
+
+\newcommand{\BlkEmbSim}{%
+\cvproject{EmbSIM --- simulateur de microcontrôleurs et de circuits}{personnel}{depuis oct.\ 2026}{github.com/EmbLinkOs/EmbSIM}
+\begin{itemize}
+  \item Simulateurs de jeux d'instructions et modèles de périphériques (Cortex-M, AVR ; GPIO, timers, USART, SPI,
+    I²C, ADC, DMA des STM32F1/F4) couplés à un solveur de circuit par analyse nodale ; la CI exécute des
+    exemples STM32Cube, Arduino et Pico SDK non modifiés. Stade précoce.
+\end{itemize}}
+
+\newcommand{\BlkAccess}{%
+\cvproject{Terminal de contrôle d'accès RFID/PIN sous FreeRTOS}{personnel}{oct.\ 2026}{github.com/teo1747/stm32-freertos-access-control}
+\begin{itemize}
+  \item Drivers au niveau registre (sans HAL constructeur) sur STM32F446RE : RFID MFRC522 en SPI, SSD1306, RTC
+    DS3231 et EEPROM 24LC256 en I²C, clavier, servo en PWM, watchdog ; six tâches FreeRTOS avec queues, mutex,
+    event groups et stream buffers ; PIN hachés SHA-256 salés et étirés ; journal protégé par CRC.
+  \item Tests unitaires hôte avec sanitizers et scénarios système sous EmbSIM ; pas encore testé sur carte physique.
+\end{itemize}
+\cvenv{Environnement\,:}{NUCLEO-F446RE, FreeRTOS 11, CMSIS, arm-none-eabi-gcc, CMake, Ninja}}
+
+% ---------------------------------------------------------------- formation & langues
+\newcommand{\BlkEducation}{%
+\section{Formation \& langues}
+\cvedu{Diplôme d'ingénieur (Bac+5) --- Systèmes embarqués}{Polytech Dijon}{Dijon}{2023 -- sept.\ 2026}
+{\color{muted}Diplômé. Dernière année en alternance chez FORVIA. Enseignements : électronique, PCB, temps réel, SoC/FPGA.\par}
+\cvedu{Classes préparatoires (2 ans) --- mathématiques, physique, électronique}{IUC}{\iucplace}{\iucdates}
+\vspace{4pt}
+\cvskill{Langues}{Anglais : langue maternelle (anglophone), TOEIC C1 (2024)\sep Français : courant (B2)}
+\cvskill{Certification}{Cisco CCNA 1 (juillet 2024)}}
+\newcommand{\iucplace}{Cameroun}
+\newcommand{\iucdates}{2021 -- 2023}
+
+\newcommand{\BlkLanguages}{} % intégré à \BlkEducation

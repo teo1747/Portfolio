@@ -1,0 +1,5 @@
+_site/
+cv/build/
+cv/pdf/
+__pycache__/
+.DS_Store

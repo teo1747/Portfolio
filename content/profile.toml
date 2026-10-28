@@ -1,0 +1,112 @@
+# Profile, hero, facts, education, CV downloads.
+# Any text can be a plain string (same in both languages) or { en = "...", fr = "..." }.
+# Inline markup allowed in text: **bold** and `code`.
+
+[meta]
+name = "Junior Deogracias Mambo Motsou"
+short_name = "Mambo Motsou"
+email = "motsoujunior17@gmail.com"
+github = "teo1747"
+org = "EmbLinkOs"
+linkedin = "teo1747"
+url = "https://teo1747.github.io/Portfolio/"
+site_repo = "Portfolio"
+description = { en = "Embedded systems engineer: firmware, RTOS, hardware bring-up and digital design. Polytech Dijon graduate, open to embedded software and hardware roles.", fr = "Ingénieur systèmes embarqués : firmware, RTOS, mise en route matérielle et conception numérique. Diplômé de Polytech Dijon, ouvert aux postes en logiciel et matériel embarqués." }
+
+[hero]
+role = { en = "Embedded systems engineer", fr = "Ingénieur systèmes embarqués" }
+wave_text = "TEO"
+wave_caption = { en = "Three bytes on a UART line, 8N1, least significant bit first: the kind of trace I read every day.", fr = "Trois octets sur une ligne UART, 8N1, bit de poids faible en premier : le genre de trace que je lis tous les jours." }
+intro.en = """
+I write firmware for microcontrollers and bring it up on real hardware: automotive LIN and MeLiBu nodes at FORVIA,
+STM32 and PIC32 boards at Polytech Dijon, and VHDL designs on Xilinx FPGAs. In my own time I build an RTOS,
+an operating system and the toolchain around them.
+"""
+intro.fr = """
+J'écris du firmware pour microcontrôleurs et je le mets en route sur le matériel : nœuds automobiles LIN et MeLiBu
+chez FORVIA, cartes STM32 et PIC32 à Polytech Dijon, conceptions VHDL sur FPGA Xilinx. En parallèle, je développe
+un RTOS, un système d'exploitation et la chaîne d'outils qui les accompagne.
+"""
+
+[texts]
+about.en = """
+I graduated in September 2026 from Polytech Dijon with an engineering degree (Master's level) in embedded systems.
+My final year was a work-study apprenticeship at FORVIA, in the Surface Activation department, where I brought up
+firmware on new automotive silicon and owned the software of an interior-lighting demonstrator.
+
+I work from datasheets and reference manuals, and I like the moment where a fault has to be pinned on the right layer:
+silicon revision, jumper, timing, or code. I am looking for a role in embedded software, or in embedded software and
+hardware together, where firmware meets real boards.
+
+I grew up in Cameroon, speak English natively and work in French daily.
+"""
+about.fr = """
+Je suis diplômé de Polytech Dijon depuis septembre 2026 (diplôme d'ingénieur en systèmes embarqués, Bac+5).
+Ma dernière année s'est déroulée en alternance chez FORVIA, au département Surface Activation : mise en route
+de firmware sur de nouveaux composants automobiles et responsabilité du logiciel d'un démonstrateur d'éclairage intérieur.
+
+Je travaille à partir des datasheets et des manuels de référence, et j'aime le moment où il faut attribuer un défaut
+à la bonne couche : révision de silicium, cavalier, timing ou code. Je cherche un poste en logiciel embarqué, ou en
+logiciel et matériel embarqués, là où le firmware rencontre les cartes.
+
+J'ai grandi au Cameroun ; l'anglais est ma langue maternelle et je travaille en français au quotidien.
+"""
+
+contact_text.en = "The quickest way to reach me is by email. I am available now for a permanent position in France."
+contact_text.fr = "Le plus simple pour me joindre est l'e-mail. Je suis disponible immédiatement pour un CDI en France."
+
+cv_text.en = "Two versions, each in English and French. Pick the one closest to the role."
+cv_text.fr = "Deux versions, chacune en français et en anglais. Choisissez celle qui correspond le mieux au poste."
+
+[[facts]]
+k = { en = "Degree", fr = "Diplôme" }
+v = { en = "Engineering degree in embedded systems, Polytech Dijon, 2026", fr = "Ingénieur systèmes embarqués, Polytech Dijon, 2026" }
+[[facts]]
+k = { en = "Last role", fr = "Dernier poste" }
+v = { en = "Apprentice embedded engineer, FORVIA, 2025–2026", fr = "Ingénieur systèmes embarqués en alternance, FORVIA, 2025–2026" }
+[[facts]]
+k = { en = "Looking for", fr = "Recherche" }
+v = { en = "Embedded software, or embedded software and hardware", fr = "Logiciel embarqué, ou logiciel et matériel embarqués" }
+[[facts]]
+k = { en = "Location", fr = "Localisation" }
+v = { en = "France, available now", fr = "France, disponible immédiatement" }
+[[facts]]
+k = { en = "Languages", fr = "Langues" }
+v = { en = "English (native), French (fluent, B2)", fr = "Anglais (langue maternelle), français (courant, B2)" }
+
+[[education]]
+dates = { en = "2023 – Sep. 2026", fr = "2023 – sept. 2026" }
+degree = { en = "Engineering degree (Master's level), Embedded Systems", fr = "Diplôme d'ingénieur (Bac+5), Systèmes embarqués" }
+school = "Polytech Dijon"
+place = "Dijon, France"
+text.en = """
+Graduated September 2026. Final year as a work-study apprentice at FORVIA. Coursework included analogue and
+digital electronics, PCB design and manufacture, real-time embedded systems, SoC/FPGA design and wireless communication.
+"""
+text.fr = """
+Diplômé en septembre 2026. Dernière année en alternance chez FORVIA. Enseignements : électronique analogique et
+numérique, conception et fabrication de PCB, systèmes embarqués temps réel, conception SoC/FPGA, communications sans fil.
+"""
+
+[[education]]
+dates = "2021 – 2023"
+degree = { en = "Two-year preparatory programme: mathematics, physics, electronics", fr = "Classes préparatoires (2 ans) : mathématiques, physique, électronique" }
+school = "IUC"
+place = { en = "Cameroon", fr = "Cameroun" }
+
+[[cv]]
+lang = "en"
+file = "CV_MamboMotsou_Embedded-SW-HW-Engineer_EN.pdf"
+title = { en = "Embedded Software & Hardware Engineer", fr = "Embedded Software & Hardware Engineer" }
+[[cv]]
+lang = "en"
+file = "CV_MamboMotsou_Embedded-Software-Engineer_EN.pdf"
+title = { en = "Embedded Software Engineer", fr = "Embedded Software Engineer" }
+[[cv]]
+lang = "fr"
+file = "CV_MamboMotsou_Ingenieur-Logiciel-Materiel-Embarque_FR.pdf"
+title = { en = "Ingénieur logiciel et matériel embarqué", fr = "Ingénieur logiciel et matériel embarqué" }
+[[cv]]
+lang = "fr"
+file = "CV_MamboMotsou_Ingenieur-Logiciel-Embarque_FR.pdf"
+title = { en = "Ingénieur logiciel embarqué", fr = "Ingénieur logiciel embarqué" }

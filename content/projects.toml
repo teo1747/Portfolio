@@ -1,0 +1,489 @@
+# Projects shown on the site, in display order.
+# category: professional | academic | personal
+# domains: keys from ui.toml [domains]
+# env: list of { k = <key from ui.toml [env]>, v = "..." }
+# repo: "owner/name" on GitHub, or omit
+# Text fields accept **bold**, `code` and [links](https://...).
+
+intro.en = """
+Each project lists the problem, what I did, the tools and boards involved, and what came out of it, including what is
+not finished. Professional work is described without confidential detail. My personal projects are developed with AI
+coding assistants: I set the architecture, specifications and verification strategy, and review what goes in.
+"""
+intro.fr = """
+Chaque projet présente le problème, ce que j'ai fait, les outils et cartes utilisés, et le résultat, y compris ce qui
+n'est pas terminé. Les travaux professionnels sont décrits sans détail confidentiel. Mes projets personnels sont développés
+avec des assistants de programmation IA : je fixe l'architecture, les spécifications et la stratégie de vérification,
+et je relis ce qui est intégré.
+"""
+
+# ------------------------------------------------------------------ professional
+[[project]]
+id = "tcu"
+category = "professional"
+domains = ["firmware", "automotive", "bringup"]
+period = { en = "FORVIA, 2025–2026", fr = "FORVIA, 2025–2026" }
+title = { en = "Firmware bring-up of a LIN-controlled heating-element controller", fr = "Mise en route du firmware d'un contrôleur d'élément chauffant piloté en LIN" }
+context = { en = "Thermal Control Unit (TCU) on Infineon TLD4020-3ET", fr = "Thermal Control Unit (TCU) sur Infineon TLD4020-3ET" }
+summary.en = "C firmware for a heater controller built on an Arm Cortex-M23 with integrated LIN: commands over LIN, heater PWM, NTC-based regulation and fault protection."
+summary.fr = "Firmware C d'un contrôleur de chauffe basé sur un Arm Cortex-M23 avec LIN intégré : commandes LIN, PWM de chauffe, régulation par CTN et protections."
+problem.en = """
+A heating element has to be switched on and off over a LIN bus and regulated from an NTC thermistor. The target is a
+new automotive device, the Infineon TLD4020-3ET, first on its evaluation board and later on the real TCU board.
+The thermistor divider is supplied from the switched heater output, so during PWM the ADC sees a 100 Hz square wave
+instead of a steady voltage.
+"""
+problem.fr = """
+Un élément chauffant doit être commandé en marche/arrêt par bus LIN et régulé à partir d'une thermistance CTN. La cible
+est un composant automobile récent, l'Infineon TLD4020-3ET, d'abord sur sa carte d'évaluation puis sur la carte TCU.
+Le pont diviseur de la CTN est alimenté par la sortie de chauffe commutée : pendant la PWM, l'ADC voit un signal carré
+à 100 Hz au lieu d'une tension stable.
+"""
+contribution = [
+  { en = "Wrote the firmware structure as a state machine: LIN ON/OFF command handling, heater PWM through the LDRV peripheral, ADC acquisition, NTC regulation and fault protection.", fr = "Structure du firmware en machine d'états : traitement des commandes LIN ON/OFF, PWM de chauffe via le périphérique LDRV, acquisition ADC, régulation CTN et protections." },
+  { en = "Traced a HardFault in device initialisation to a silicon-revision mismatch: a configuration register missing on the older evaluation silicon. A replacement board resolved it.", fr = "Remonté un HardFault à l'initialisation jusqu'à une révision de silicium différente : un registre de configuration absent sur l'ancienne carte d'évaluation. Une carte de remplacement a réglé le problème." },
+  { en = "Traced a lost debug connection to the boot-mode jumper and to USB powering the J-Link and the target at the same time.", fr = "Expliqué une perte de liaison de debug par le cavalier de mode de boot et l'alimentation simultanée du J-Link et de la cible par USB." },
+  { en = "Set up printf debugging over the LIN line, read in MobaXterm at 19,200 baud 8N1.", fr = "Mis en place un debug printf sur la ligne LIN, lu sous MobaXterm à 19 200 bauds 8N1." },
+  { en = "Synchronised ADC sampling to the PWM on-time: an ISR fires at mid-pulse, 16 samples are averaged and posted to the main loop. The 0 % and 100 % duty cases are constant DC in hardware and needed no special sampling.", fr = "Synchronisé l'échantillonnage ADC sur le temps haut de la PWM : une ISR se déclenche à mi-impulsion, 16 mesures sont moyennées puis transmises à la boucle principale. Les rapports cycliques 0 % et 100 % sont un continu en matériel et ne demandent pas de traitement particulier." },
+]
+env = [
+  { k = "hw", v = "Infineon TLD4020-3ET (Arm Cortex-M23, integrated LIN), TLD4020-3STD_EVAL board, NTC thermistor" },
+  { k = "tools", v = "IAR Embedded Workbench, Infineon MCU Configuration Wizard, on-board J-Link, MobaXterm" },
+  { k = "lang", v = "C" },
+  { k = "proto", v = "LIN" },
+]
+outcome.en = """
+Bring-up blockers cleared on the evaluation board, LIN control and printf-over-LIN debug working, and temperature
+readings stable enough for regulation after the PWM-synchronised sampling. Work was done on the evaluation board;
+the production TCU board was planned for a later phase.
+"""
+outcome.fr = """
+Blocages de mise en route levés sur la carte d'évaluation, commande LIN et debug printf sur LIN fonctionnels, et mesures
+de température assez stables pour la régulation grâce à l'échantillonnage synchronisé. Le travail a été mené sur la carte
+d'évaluation ; la carte TCU de série était prévue pour une phase ultérieure.
+"""
+
+[[project]]
+id = "melibu"
+category = "professional"
+domains = ["firmware", "automotive", "bringup"]
+period = { en = "FORVIA, 2025–2026", fr = "FORVIA, 2025–2026" }
+title = { en = "MeLiBu LED driver port: Melexis MLX81116 to MLX81143", fr = "Portage d'un driver LED MeLiBu : Melexis MLX81116 vers MLX81143" }
+context = { en = "RP2040 master, MeLiBu 1.x LED bus", fr = "maître RP2040, bus LED MeLiBu 1.x" }
+summary.en = "Adapted a working MLX81116 driver to the newer MLX81143 LED controller and made a 154-LED panel display correctly."
+summary.fr = "Adaptation d'un driver MLX81116 existant au contrôleur LED MLX81143, plus récent, jusqu'à l'affichage correct d'un panneau de 154 LED."
+problem.en = """
+A demonstration panel of 22 × 7 RGB LEDs is driven over MeLiBu (Melexis LED bus) by MLX81143 nodes, 14 LEDs each,
+from an RP2040. The existing code targeted the MLX81116, which addresses its LEDs differently, and the bus showed
+timing faults.
+"""
+problem.fr = """
+Un panneau de démonstration de 22 × 7 LED RVB est piloté en MeLiBu (bus LED Melexis) par des nœuds MLX81143 de 14 LED
+chacun, depuis un RP2040. Le code existant visait le MLX81116, qui adresse ses LED différemment, et le bus présentait des
+défauts de timing.
+"""
+contribution = [
+  { en = "Compared the two datasheets: same frame format, bit order, CRC and parity, but the MLX81143 uses extended-mode sub-addressing (`subAdr = (data_len - 2) / 2`) for up to 14 LEDs per node.", fr = "Comparé les deux datasheets : même format de trame, ordre des bits, CRC et parité, mais le MLX81143 utilise un sous-adressage en mode étendu (`subAdr = (data_len - 2) / 2`) pour jusqu'à 14 LED par nœud." },
+  { en = "Confirmed on the hardware that PWM values are linear 15-bit with no inversion, in R, G, B order.", fr = "Vérifié sur le matériel que les valeurs PWM sont linéaires sur 15 bits, sans inversion, dans l'ordre R, V, B." },
+  { en = "Fixed bus timing: the break uses a busy-wait because sleeping hangs with interrupts masked; the critical section covers only the break so UART reception no longer drops bytes; the TX FIFO is drained before the next frame to avoid collisions.", fr = "Corrigé le timing du bus : le break utilise une attente active car la mise en veille bloque sous interruptions masquées ; la section critique ne couvre plus que le break, ce qui supprime les pertes d'octets en réception UART ; la FIFO TX est vidée avant la trame suivante pour éviter les collisions." },
+  { en = "Found the wrong bus return pin, and used a PIO-based receiver to confirm that the slaves acknowledge.", fr = "Trouvé une mauvaise broche de retour bus, et utilisé un récepteur PIO pour confirmer les acquittements des esclaves." },
+  { en = "Placed the fix for the panel's scrambled LED wiring in the hardware-mapping layer, leaving the input convention untouched.", fr = "Placé la correction du câblage désordonné des LED dans la couche de mapping matériel, sans toucher à la convention d'entrée." },
+]
+env = [
+  { k = "hw", v = "Raspberry Pi RP2040, Melexis MLX81116 and MLX81143, 22 × 7 RGB LED panel" },
+  { k = "tools", v = "Raspberry Pi Pico SDK, PIO state machines" },
+  { k = "lang", v = "C" },
+  { k = "proto", v = "MeLiBu 1.x, UART" },
+]
+outcome.en = "The MLX81143 panel is driven with correct addressing, colours and LED positions, checked by direct observation of the LEDs."
+outcome.fr = "Le panneau MLX81143 est piloté avec l'adressage, les couleurs et les positions de LED corrects, vérifiés par observation directe des LED."
+
+[[project]]
+id = "lighting"
+category = "professional"
+domains = ["software", "automotive", "firmware"]
+period = { en = "FORVIA, 2025–2026", fr = "FORVIA, 2025–2026" }
+title = { en = "Interior ambient-lighting demonstrator", fr = "Démonstrateur d'éclairage d'ambiance intérieur" }
+context = { en = "software owner for a car-interior demonstration buck", fr = "responsable logiciel d'un buck de démonstration d'habitacle" }
+summary.en = "A PC application plays video animations across LED strips in a car-interior mock-up through nine STM32 gateways, controlled from an Android tablet."
+summary.fr = "Une application PC joue des animations vidéo sur les rubans LED d'une maquette d'habitacle via neuf gateways STM32, pilotée depuis une tablette Android."
+problem.en = """
+The demonstration buck, a full-size interior mock-up shown to a carmaker, needed dynamic ambient lighting across several zones.
+An earlier prototype drove only a few LED displays; the buck needed nine UART gateways kept in step, and a way
+to control it without a keyboard.
+"""
+problem.fr = """
+Le buck de démonstration, une maquette d'habitacle à l'échelle 1 présentée à un constructeur, devait recevoir un éclairage
+d'ambiance dynamique sur plusieurs zones. Le prototype précédent ne pilotait que quelques afficheurs ; le buck demandait neuf
+gateways UART synchronisées et un pilotage sans clavier.
+"""
+contribution = [
+  { en = "Extended the Python/PyQt5 application from a few displays to nine gateways: OpenCV decodes MP4 animations, each LED's logical ID maps to a pixel of the frame, and one worker thread per gateway sends its share at 921,600 baud.", fr = "Étendu l'application Python/PyQt5 de quelques afficheurs à neuf gateways : OpenCV décode les animations MP4, l'identifiant logique de chaque LED correspond à un pixel de la frame, et un thread par gateway envoie sa part à 921 600 bauds." },
+  { en = "Kept all nine gateways on the same frame with a thread barrier; zones meant to stay a solid colour run outside the video pipeline.", fr = "Maintenu les neuf gateways sur la même frame grâce à une barrière entre threads ; les zones de couleur fixe restent hors de la chaîne vidéo." },
+  { en = "Serial frames are ASCII with delta compression, so only changed LEDs are sent.", fr = "Les trames série sont en ASCII avec compression delta : seules les LED modifiées sont envoyées." },
+  { en = "Built the Android tablet app (Kotlin, Jetpack Compose): zones, colours and brightness presets, sent over Bluetooth serial as JSON commands with explicit error codes. Added a keyboard fallback mode.", fr = "Développé l'application tablette Android (Kotlin, Jetpack Compose) : zones, couleurs et presets de luminosité, envoyés en Bluetooth série sous forme de commandes JSON avec codes d'erreur. Ajouté un mode de secours au clavier." },
+  { en = "Changed the STM32 gateway firmware as little as possible: when two gateways share a UART line, each filters LED IDs by offset.", fr = "Modifié le firmware des gateways STM32 au minimum : quand deux gateways partagent une ligne UART, chacune filtre les identifiants LED par décalage." },
+  { en = "Also maintain a smaller layout-driven variant of the app, where each display is one entry in a zones table.", fr = "Maintenu aussi une variante plus légère de l'application, pilotée par une table de zones où chaque afficheur est une entrée." },
+]
+env = [
+  { k = "hw", v = "STM32 gateways (C firmware), WS2812 LED strips, Android tablet, PC" },
+  { k = "lang", v = "Python 3, Kotlin, C" },
+  { k = "tools", v = "PyQt5, OpenCV, Jetpack Compose, Android Studio, Git" },
+  { k = "proto", v = "UART at 921,600 baud, Bluetooth SPP, JSON" },
+]
+outcome.en = "Running on the demonstration buck with nine synchronised gateways and tablet control. Documented in my final engineering report."
+outcome.fr = "En fonctionnement sur le buck de démonstration avec neuf gateways synchronisées et pilotage par tablette. Documenté dans mon rapport d'ingénieur."
+
+[[project]]
+id = "fruit"
+category = "professional"
+domains = ["software", "vision"]
+period = { en = "KMUTT internship, 2025", fr = "Stage KMUTT, 2025" }
+title = { en = "Fruit classification for precision agriculture", fr = "Classification de fruits pour l'agriculture de précision" }
+context = { en = "Internship, KMUTT MDT Lab, Bangkok", fr = "Stage, KMUTT MDT Lab, Bangkok" }
+repo = "teo1747/INTERNSHIP-Fruit-recognition-deep-learning-"
+summary.en = "Transfer learning on VGG16 to classify 131 kinds of fruit, alongside an OpenCV detection pipeline."
+summary.fr = "Transfer learning sur VGG16 pour classer 131 types de fruits, avec une chaîne de détection OpenCV."
+problem.en = "The lab's precision-agriculture work needed a way to recognise fruit in images before moving processing closer to the sensor."
+problem.fr = "Les travaux du laboratoire en agriculture de précision demandaient de reconnaître des fruits dans des images, avant de rapprocher le traitement du capteur."
+contribution = [
+  { en = "Trained a classifier on the Fruits-360 dataset (131 classes) from ImageNet VGG16 weights, with two dense layers and a softmax head, 224 × 224 input.", fr = "Entraîné un classifieur sur Fruits-360 (131 classes) à partir des poids VGG16 ImageNet, avec deux couches denses et une sortie softmax, entrée 224 × 224." },
+  { en = "Wrote an OpenCV detection pipeline based on contours and colour, and an error analysis of the classifier.", fr = "Écrit une chaîne de détection OpenCV fondée sur les contours et la couleur, et une analyse d'erreurs du classifieur." },
+]
+env = [
+  { k = "lang", v = "Python" },
+  { k = "tools", v = "TensorFlow/Keras, OpenCV" },
+]
+outcome.en = "98.4 % accuracy and 0.983 macro F1 on the 4,599-image test set."
+outcome.fr = "98,4 % de bonnes classifications et un F1 macro de 0,983 sur le jeu de test de 4 599 images."
+
+[[project]]
+id = "mcu8"
+category = "professional"
+domains = ["fpga"]
+period = { en = "KMUTT internship, 2025", fr = "Stage KMUTT, 2025" }
+title = { en = "8-bit microcontroller in VHDL", fr = "Microcontrôleur 8 bits en VHDL" }
+context = { en = "Internship, self-directed FPGA training", fr = "Stage, formation FPGA en autonomie" }
+repo = "teo1747/vhdl-8bit-microcontroller"
+summary.en = "A small CPU with ROM, RAM and memory-mapped ports, written to learn processor design from the ground up."
+summary.fr = "Un petit processeur avec ROM, RAM et ports mappés en mémoire, écrit pour apprendre la conception de processeur de bout en bout."
+problem.en = "Ramp up on digital design during the internship by building a complete processor, following the reference architecture in LaMeres' *Introduction to Logic Circuits & Logic Design with VHDL*."
+problem.fr = "Monter en compétence en conception numérique pendant le stage en construisant un processeur complet, d'après l'architecture de référence du livre de LaMeres, *Introduction to Logic Circuits & Logic Design with VHDL*."
+contribution = [
+  { en = "Control unit as a 12-state fetch–decode–execute FSM covering load/store, data-manipulation and branch instructions.", fr = "Unité de contrôle en machine d'états fetch–decode–execute à 12 états, couvrant chargement/rangement, manipulation de données et branchements." },
+  { en = "ALU with ADD, SUB, AND, OR, INC, DEC and N/Z/V/C flags; memory map with 128 B ROM, 96 B RAM, 16 output and 16 input ports.", fr = "ALU avec ADD, SUB, AND, OR, INC, DEC et drapeaux N/Z/V/C ; plan mémoire avec ROM de 128 o, RAM de 96 o, 16 ports de sortie et 16 d'entrée." },
+  { en = "Testbenches for the ALU, memory and whole microcontroller.", fr = "Bancs de test pour l'ALU, la mémoire et le microcontrôleur complet." },
+]
+env = [
+  { k = "lang", v = "VHDL" },
+  { k = "tools", v = "Vivado 2024.2, XSim" },
+  { k = "hw", v = { en = "Artix-7 target (simulation only)", fr = "Cible Artix-7 (simulation uniquement)" } },
+]
+outcome.en = "Runs programs in simulation. Not deployed to a board."
+outcome.fr = "Exécute des programmes en simulation. Pas déployé sur carte."
+
+# ------------------------------------------------------------------ academic
+[[project]]
+id = "therm"
+category = "academic"
+domains = ["firmware", "rtos"]
+period = "2025–2026"
+title = { en = "Real-time thermometer: bare-metal PIC24, then FreeRTOS on PIC32MZ", fr = "Thermomètre temps réel : PIC24 en bare-metal, puis FreeRTOS sur PIC32MZ" }
+context = { en = "Polytech Dijon, V1 solo, V2 in a pair", fr = "Polytech Dijon, V1 seul, V2 en binôme" }
+repo = "teo1747/pic24-32-rt-thermometer"
+summary.en = "The same thermometer built twice: once as a bare-metal loop on a PIC24, then as a FreeRTOS task pipeline on a PIC32MZ."
+summary.fr = "Le même thermomètre réalisé deux fois : en boucle bare-metal sur PIC24, puis en chaîne de tâches FreeRTOS sur PIC32MZ."
+problem.en = "Measure temperature, timestamp and display it, then restructure the same job as cooperating real-time tasks and compare."
+problem.fr = "Mesurer la température, l'horodater et l'afficher, puis restructurer le même traitement en tâches temps réel coopérantes et comparer."
+contribution = [
+  { en = "V1, solo: PIC24FJ1024GB610 in bare-metal C with RTCC timestamps and logging to a 25LC256 SPI EEPROM.", fr = "V1, seul : PIC24FJ1024GB610 en C bare-metal, horodatage RTCC et journalisation dans une EEPROM SPI 25LC256." },
+  { en = "V2, in a pair: FreeRTOS on PIC32MZ2048EFH100, with acquisition, analysis and display tasks linked by queues and binary semaphores, and messages timestamped from the tick count.", fr = "V2, en binôme : FreeRTOS sur PIC32MZ2048EFH100, tâches d'acquisition, d'analyse et d'affichage reliées par des queues et des sémaphores binaires, messages horodatés à partir du compteur de ticks." },
+  { en = "°C/°F switch on a push button.", fr = "Bascule °C/°F par bouton-poussoir." },
+]
+env = [
+  { k = "hw", v = "Explorer 16/32, PIC24FJ1024GB610, PIC32MZ2048EFH100, TC1047A sensor, 25LC256 EEPROM" },
+  { k = "os", v = "Bare-metal (V1), FreeRTOS 10.5 (V2)" },
+  { k = "tools", v = "MPLAB X, XC16, XC32, Harmony v3, MCC, on-board debugger" },
+  { k = "lang", v = "C" },
+]
+outcome.en = "Both versions ran on the Explorer 16/32 board in the lab. The V2 sources were later lost and the repository version was rebuilt from the lab report."
+outcome.fr = "Les deux versions ont fonctionné sur la carte Explorer 16/32 en TP. Les sources de la V2 ayant été perdues, la version du dépôt a été reconstruite à partir du rapport."
+
+[[project]]
+id = "zephyr"
+category = "academic"
+domains = ["firmware", "rtos"]
+period = "2025–2026"
+title = { en = "Zephyr RTOS feasibility study on STM32", fr = "Étude de faisabilité Zephyr RTOS sur STM32" }
+context = { en = "Polytech Dijon lab", fr = "TP Polytech Dijon" }
+repo = "teo1747/zephyr-stm32-sensor-hub"
+summary.en = "Three sensors and a display sharing one I²C bus under Zephyr, each with its own thread."
+summary.fr = "Trois capteurs et un afficheur sur un même bus I²C sous Zephyr, chacun avec son thread."
+problem.en = "Evaluate Zephyr for a multi-sensor application: devicetree configuration, the sensor and display APIs, and threads sharing data."
+problem.fr = "Évaluer Zephyr pour une application multi-capteurs : configuration par devicetree, API capteurs et affichage, threads partageant des données."
+contribution = [
+  { en = "Described a BMP280 (temperature and pressure), an MPU6050 (6-axis IMU) and an SSD1306 OLED on one I²C bus in a devicetree overlay.", fr = "Décrit un BMP280 (température et pression), un MPU6050 (centrale inertielle 6 axes) et un OLED SSD1306 sur un bus I²C dans un overlay devicetree." },
+  { en = "One thread per device, with shared readings protected by a mutex; display through the display API and character framebuffer.", fr = "Un thread par périphérique, lectures partagées protégées par un mutex ; affichage via l'API display et le framebuffer caractère." },
+]
+env = [
+  { k = "hw", v = "NUCLEO-G474RE, BMP280, MPU6050, SSD1306" },
+  { k = "os", v = "Zephyr" },
+  { k = "tools", v = "West, CMake, Ninja, STM32CubeProgrammer, serial console" },
+  { k = "proto", v = "I²C" },
+]
+outcome.en = "Worked on the board; the report notes the framebuffer's small font and slow refresh as limits. The repository was rebuilt from the report after the original sources were lost."
+outcome.fr = "Fonctionnel sur la carte ; le rapport relève la petite police et le rafraîchissement lent du framebuffer. Le dépôt a été reconstruit d'après le rapport, les sources d'origine ayant été perdues."
+
+[[project]]
+id = "sram"
+category = "academic"
+domains = ["fpga"]
+period = "2025–2026"
+title = { en = "ZBT SRAM controller in VHDL", fr = "Contrôleur de SRAM ZBT en VHDL" }
+context = { en = "Polytech Dijon SoC course, pair", fr = "Cours SoC Polytech Dijon, binôme" }
+repo = "teo1747/vhdl-zbt-sram-controller"
+summary.en = "Controller for an external 512K × 36 zero-bus-turnaround SRAM, with single and burst access over a bidirectional bus."
+summary.fr = "Contrôleur d'une SRAM externe 512K × 36 zero-bus-turnaround, avec accès simples et en rafale sur bus bidirectionnel."
+problem.en = "Drive a Micron MT55L512Y36F flow-through ZBT SRAM from an FPGA, including the shared 36-bit data bus."
+problem.fr = "Piloter une SRAM ZBT flow-through Micron MT55L512Y36F depuis un FPGA, y compris le bus de données partagé de 36 bits."
+contribution = [
+  { en = "State machine for single and 4-word burst reads and writes; bus direction handled with Xilinx IOBUF primitives.", fr = "Machine d'états pour lectures et écritures simples et en rafale de 4 mots ; sens du bus géré par primitives IOBUF Xilinx." },
+  { en = "Self-checking testbench against Micron's memory model.", fr = "Banc de test auto-vérifiant contre le modèle mémoire Micron." },
+]
+env = [
+  { k = "lang", v = "VHDL" },
+  { k = "tools", v = "Vivado, ModelSim, Micron VHDL model" },
+  { k = "hw", v = "Zynq-7000 target" },
+]
+outcome.en = "The current controller passes its self-checking testbench in simulation. An earlier version, shown in the course report, failed those checks; the fix was made afterwards."
+outcome.fr = "Le contrôleur actuel passe son banc de test auto-vérifiant en simulation. Une version antérieure, présentée dans le rapport, échouait à ces contrôles ; la correction a été faite ensuite."
+
+[[project]]
+id = "video"
+category = "academic"
+domains = ["fpga"]
+period = "2025–2026"
+title = { en = "Real-time VGA video pipeline on ZedBoard", fr = "Chaîne vidéo VGA temps réel sur ZedBoard" }
+context = { en = "Polytech Dijon, pair", fr = "Polytech Dijon, binôme" }
+repo = "teo1747/zedboard-vga-video-pipeline"
+summary.en = "A 640 × 480 video chain assembled from Xilinx video IP, a VHDL block and Vitis HLS image-processing IP on a Zynq-7000."
+summary.fr = "Une chaîne vidéo 640 × 480 assemblée à partir d'IP vidéo Xilinx, d'un bloc VHDL et d'IP de traitement Vitis HLS sur Zynq-7000."
+problem.en = "Generate a VGA image on the FPGA side of a Zynq and process it in real time: inversion and a two-digit overlay."
+problem.fr = "Générer une image VGA côté FPGA d'un Zynq et la traiter en temps réel : inversion et incrustation de deux chiffres."
+contribution = [
+  { en = "Built the block design: Clocking Wizard, Video Timing Controller, Video In to AXI4-Stream and back, with VGA pins in the XDC constraints.", fr = "Construit le block design : Clocking Wizard, Video Timing Controller, conversion vidéo vers AXI4-Stream et retour, broches VGA dans les contraintes XDC." },
+  { en = "Wrote a VHDL inverter and HLS IPs pipelined at one pixel per clock.", fr = "Écrit un inverseur VHDL et des IP HLS pipelinées à un pixel par cycle." },
+  { en = "Checked the sync signals on the board with an ILA capture.", fr = "Vérifié les signaux de synchronisation sur la carte par capture ILA." },
+]
+env = [
+  { k = "hw", v = "ZedBoard (Zynq-7000, xc7z020)" },
+  { k = "tools", v = "Vivado 2022.2, Vitis HLS 2022.2, ILA" },
+  { k = "lang", v = "VHDL, C++ (HLS)" },
+  { k = "proto", v = "AXI4-Stream, VGA" },
+]
+outcome.en = "Sync was correct on hardware, but the final demo showed no image: the HLS IPs waited for a start command over AXI-Lite that nothing sent. They have since been made free-running; this fix has not yet been tested on the board."
+outcome.fr = "La synchronisation était correcte sur le matériel, mais la démo finale n'affichait pas d'image : les IP HLS attendaient une commande de démarrage AXI-Lite que rien n'envoyait. Elles fonctionnent désormais en continu ; cette correction n'a pas encore été testée sur carte."
+
+[[project]]
+id = "filter"
+category = "academic"
+domains = ["fpga"]
+period = "2024–2025"
+title = { en = "3 × 3 image filter on FPGA", fr = "Filtre d'image 3 × 3 sur FPGA" }
+context = { en = "Polytech Dijon, solo", fr = "Polytech Dijon, seul" }
+repo = "teo1747/vhdl-2d-image-filter"
+summary.en = "Streaming averaging and Gaussian filters on 8-bit greyscale pixels, verified on a real image."
+summary.fr = "Filtres moyenneur et gaussien en flux sur pixels 8 bits en niveaux de gris, vérifiés sur une image réelle."
+problem.en = "Apply 3 × 3 convolution filters to a pixel stream without storing the whole image."
+problem.fr = "Appliquer des filtres de convolution 3 × 3 à un flux de pixels sans stocker l'image entière."
+contribution = [
+  { en = "Sliding 3 × 3 window from nine registers and two line buffers built on the Xilinx FIFO Generator IP.", fr = "Fenêtre glissante 3 × 3 à partir de neuf registres et de deux line buffers construits sur l'IP FIFO Generator Xilinx." },
+  { en = "Averaging path as a pipelined adder tree with explicit bit growth (9 → 10 → 11 bits); Gaussian kernel 1-2-1 / 2-4-2 / 1-2-1.", fr = "Chemin moyenneur en arbre d'additionneurs pipeliné avec croissance en bits explicite (9 → 10 → 11 bits) ; noyau gaussien 1-2-1 / 2-4-2 / 1-2-1." },
+  { en = "Testbench that streams the Lena image through the design and writes the outputs for comparison.", fr = "Banc de test qui fait passer l'image Lena dans le design et écrit les sorties pour comparaison." },
+]
+env = [
+  { k = "lang", v = "VHDL, MATLAB" },
+  { k = "tools", v = "Vivado 2024.1, XSim, FIFO Generator IP" },
+  { k = "hw", v = { en = "Artix-7 (xc7a100t), simulation only", fr = "Artix-7 (xc7a100t), simulation uniquement" } },
+]
+outcome.en = "Outputs match a software reference pixel for pixel, except the last two columns of each line. Simulation only."
+outcome.fr = "Les sorties correspondent pixel à pixel à une référence logicielle, sauf les deux dernières colonnes de chaque ligne. Simulation uniquement."
+
+[[project]]
+id = "tempmon"
+category = "academic"
+domains = ["fpga"]
+period = "2024–2025"
+title = { en = "Temperature monitor on Nexys 4 DDR", fr = "Moniteur de température sur Nexys 4 DDR" }
+context = { en = "Polytech Dijon 4th-year project, pair", fr = "Projet de 4e année Polytech Dijon, binôme" }
+repo = "teo1747/nexys4ddr-temperature-monitor"
+summary.en = "Reads the board's ADT7420 sensor over I²C and shows the temperature on the 7-segment display and over UART."
+summary.fr = "Lit le capteur ADT7420 de la carte en I²C et affiche la température sur les afficheurs 7 segments et en UART."
+problem.en = "Integrate I²C and UART cores with display logic into a complete design that meets timing on the board."
+problem.fr = "Intégrer des cœurs I²C et UART à la logique d'affichage dans un design complet qui tient le timing sur la carte."
+contribution = [
+  { en = "Integrated existing open I²C master and UART transmitter cores into the top level, with the conversion and display multiplexing.", fr = "Intégré des cœurs ouverts de maître I²C et d'émetteur UART dans le top, avec la conversion et le multiplexage de l'affichage." },
+  { en = "Wrote the pin constraints and closed timing at 100 MHz.", fr = "Écrit les contraintes de broches et tenu le timing à 100 MHz." },
+]
+env = [
+  { k = "hw", v = "Nexys 4 DDR (Artix-7, xc7a100t), ADT7420" },
+  { k = "tools", v = "Vivado 2024.1" },
+  { k = "proto", v = "I²C at 400 kHz, UART at 115,200 baud" },
+]
+outcome.en = "Implemented at 100 MHz with +5.42 ns worst negative slack, using 1,936 LUTs (3.1 %)."
+outcome.fr = "Implémenté à 100 MHz avec une marge (WNS) de +5,42 ns, sur 1 936 LUT (3,1 %)."
+
+[[project]]
+id = "mifare"
+category = "academic"
+domains = ["software"]
+period = "2024"
+title = { en = "MIFARE Classic wallet", fr = "Porte-monnaie MIFARE Classic" }
+context = { en = "Polytech Dijon wireless course, solo", fr = "Cours de communications sans fil Polytech Dijon, seul" }
+repo = "teo1747/mifare-classic-wallet-qt"
+summary.en = "A Qt desktop application that turns a MIFARE Classic 1K card into a small wallet."
+summary.fr = "Une application Qt qui transforme une carte MIFARE Classic 1K en petit porte-monnaie."
+problem.en = "Store an identity and a balance on a contactless card safely, using the card's sector keys and value blocks."
+problem.fr = "Stocker une identité et un solde sur une carte sans contact de façon sûre, avec les clés de secteur et les blocs valeur de la carte."
+contribution = [
+  { en = "Identity in one sector; balance in a value block with a backup block, so increments and decrements go through the backup and are restored.", fr = "Identité dans un secteur ; solde dans un bloc valeur avec bloc de sauvegarde, pour que crédits et débits passent par la sauvegarde puis soient restaurés." },
+  { en = "Key A for reading, key B for writing; the keys stay in the reader's secure storage.", fr = "Clé A pour la lecture, clé B pour l'écriture ; les clés restent dans la mémoire sécurisée du lecteur." },
+]
+env = [
+  { k = "hw", v = "ODALID USB RFID reader, MIFARE Classic 1K cards" },
+  { k = "tools", v = "Qt 5.15, Qt Creator, qmake" },
+  { k = "lang", v = "C++" },
+  { k = "proto", v = "ISO 14443-A" },
+]
+outcome.en = "Working application, tested in class with the reader and physical cards."
+outcome.fr = "Application fonctionnelle, testée en cours avec le lecteur et des cartes physiques."
+
+# ------------------------------------------------------------------ personal
+[[project]]
+id = "rtos"
+category = "personal"
+domains = ["rtos", "firmware", "tooling"]
+period = { en = "Since Oct. 2026", fr = "Depuis oct. 2026" }
+title = "EmbLinkRTOS"
+context = { en = "preemptive RTOS for microcontrollers", fr = "RTOS préemptif pour microcontrôleurs" }
+repo = "EmbLinkOs/EmbLinkRTOS"
+summary.en = "A fixed-priority preemptive RTOS written specification-first, with ports for Cortex-M, RISC-V and AVR."
+summary.fr = "Un RTOS préemptif à priorités fixes écrit à partir de spécifications, avec des ports Cortex-M, RISC-V et AVR."
+problem.en = "Understand an RTOS kernel at the level of every context switch, and test it against an executable model instead of by hand."
+problem.fr = "Comprendre un noyau RTOS jusqu'au moindre changement de contexte, et le tester contre un modèle exécutable plutôt qu'à la main."
+contribution = [
+  { en = "Scheduler with per-priority ready lists under a bitmap, FIFO within a priority, and a small profile for 8-bit targets.", fr = "Ordonnanceur avec une liste prête par priorité indexée par bitmap, FIFO à priorité égale, et un profil réduit pour les cibles 8 bits." },
+  { en = "Cortex-M port: threads on PSP, switch in PendSV, FPU registers s16–s31 saved only for threads that used the FPU, BASEPRI critical sections. RISC-V port with `mret` and the CLINT timer; AVR port.", fr = "Port Cortex-M : threads sur PSP, commutation dans PendSV, registres FPU s16–s31 sauvegardés seulement pour les threads qui utilisent la FPU, sections critiques BASEPRI. Port RISC-V avec `mret` et le timer CLINT ; port AVR." },
+  { en = "Semaphores, and mutexes with priority inheritance and priority ceiling.", fr = "Sémaphores, et mutex avec héritage et plafond de priorité." },
+  { en = "Conformance tests, a context-switch benchmark, and differential testing against a Python reference model of the scheduler.", fr = "Tests de conformité, benchmark de changement de contexte, et tests différentiels contre un modèle de référence Python de l'ordonnanceur." },
+]
+env = [
+  { k = "hw", v = "NUCLEO-F446RE, Arduino Uno (ATmega328P), ESP32-C3 board definitions; QEMU MPS2 and RISC-V virt" },
+  { k = "lang", v = "C11, Arm and RISC-V assembly, Python" },
+  { k = "tools", v = "CMake, Ninja, Kconfig, GCC, Clang, QEMU, EmbSIM, Sphinx, Doxygen" },
+  { k = "test", v = "GitHub Actions with ASan, UBSan, TSan, QEMU and EmbSIM jobs" },
+]
+outcome.en = "Threads, timing, semaphores and mutexes are implemented and tested in emulation. Queues, event flags, software timers and MPU isolation are specified but not written yet, and nothing has run on a physical board."
+outcome.fr = "Threads, gestion du temps, sémaphores et mutex sont implémentés et testés en émulation. Queues, event flags, timers logiciels et isolation MPU sont spécifiés mais pas encore écrits, et rien n'a encore tourné sur carte physique."
+
+[[project]]
+id = "access"
+category = "personal"
+domains = ["firmware", "rtos"]
+period = { en = "Oct. 2026", fr = "Oct. 2026" }
+title = { en = "RFID and PIN access-control terminal", fr = "Terminal de contrôle d'accès RFID et PIN" }
+context = { en = "FreeRTOS on STM32F446RE, no vendor HAL", fr = "FreeRTOS sur STM32F446RE, sans HAL constructeur" }
+repo = "teo1747/stm32-freertos-access-control"
+summary.en = "A door terminal: present a card, type a PIN, and a servo unlocks the door; users and the access log live in EEPROM."
+summary.fr = "Un terminal de porte : on présente une carte, on tape un PIN, et un servo déverrouille ; utilisateurs et journal sont stockés en EEPROM."
+problem.en = "Build a complete FreeRTOS application with register-level drivers for every peripheral, and handle PINs and logs safely."
+problem.fr = "Construire une application FreeRTOS complète avec des drivers au niveau registre pour chaque périphérique, et gérer PIN et journal de façon sûre."
+contribution = [
+  { en = "Drivers written on CMSIS registers for an MFRC522 RFID reader on SPI, an SSD1306 OLED, a DS3231 RTC and a 24LC256 EEPROM on I²C, a keypad, servo and buzzer PWM, UART shell and watchdog.", fr = "Drivers écrits sur les registres CMSIS pour un lecteur RFID MFRC522 en SPI, un OLED SSD1306, une RTC DS3231 et une EEPROM 24LC256 en I²C, un clavier, la PWM du servo et du buzzer, un shell UART et le watchdog." },
+  { en = "Six tasks over five priority levels, with queues, bus mutexes, an event group for supervisor check-ins, task notifications and stream buffers from UART interrupts.", fr = "Six tâches sur cinq niveaux de priorité, avec queues, mutex de bus, event group pour la supervision, notifications de tâches et stream buffers depuis les interruptions UART." },
+  { en = "PINs stored as salted SHA-256 stretched over 1,024 rounds, compared in constant time; CRC-checked records and a ring-buffer access log.", fr = "PIN stockés en SHA-256 salé et étiré sur 1 024 tours, comparés en temps constant ; enregistrements vérifiés par CRC et journal en anneau." },
+]
+env = [
+  { k = "hw", v = "NUCLEO-F446RE, MFRC522, SSD1306, DS3231, 24LC256, 4 × 4 keypad, SG90 servo" },
+  { k = "os", v = "FreeRTOS 11 (ARM_CM4F port)" },
+  { k = "tools", v = "arm-none-eabi-gcc, CMake, Ninja, EmbSIM" },
+  { k = "test", v = "Host unit tests with sanitizers, SHA-256 checked against FIPS 180-4 vectors, five system scenarios in simulation" },
+]
+outcome.en = "All unit tests and simulated system scenarios pass; the simulation caught an I²C race that was then fixed. Not yet run on a physical board."
+outcome.fr = "Tous les tests unitaires et scénarios système simulés passent ; la simulation a révélé une course sur l'I²C, corrigée depuis. Pas encore exécuté sur carte physique."
+
+[[project]]
+id = "emblinkos"
+category = "personal"
+domains = ["os", "tooling"]
+period = { en = "Since May 2026", fr = "Depuis mai 2026" }
+title = "EmbLinkOS"
+context = { en = "x86-64 operating system written from scratch", fr = "système d'exploitation x86-64 écrit de zéro" }
+repo = "EmbLinkOs/EmbLinkOs"
+summary.en = "An operating system from the boot sector up: bootloaders, kernel, filesystems, drivers, a shell and ports of existing tools."
+summary.fr = "Un système d'exploitation depuis le secteur de boot : bootloaders, noyau, systèmes de fichiers, drivers, shell et portages d'outils existants."
+problem.en = "Learn how an operating system works end to end by building one where each layer can be explained and tested."
+problem.fr = "Comprendre un système d'exploitation de bout en bout en en construisant un dont chaque couche peut être expliquée et testée."
+contribution = [
+  { en = "Two-stage BIOS bootloader in NASM (real, then protected, then long mode) and a UEFI loader; higher-half kernel.", fr = "Bootloader BIOS en deux étages en NASM (mode réel, puis protégé, puis long) et chargeur UEFI ; noyau higher-half." },
+  { en = "4-level paging, APIC and IO-APIC, SMP, ring-3 processes with a spawn model instead of fork, system calls, ELF loading.", fr = "Pagination 4 niveaux, APIC et IO-APIC, SMP, processus ring 3 avec un modèle spawn plutôt que fork, appels système, chargement ELF." },
+  { en = "EMBKFS, a copy-on-write B-tree filesystem with CRC32C integrity, snapshots and AES-XTS encryption, checked against a Python oracle; FAT32 and a VFS layer.", fr = "EMBKFS, un système de fichiers B-tree copy-on-write avec intégrité CRC32C, snapshots et chiffrement AES-XTS, vérifié contre un oracle Python ; FAT32 et une couche VFS." },
+  { en = "PCI, AHCI, NVMe and USB host-controller drivers; newlib and TCC ported, with TCC compiling on the running system.", fr = "Drivers PCI, AHCI, NVMe et contrôleurs USB ; portage de newlib et de TCC, TCC compilant sur le système en marche." },
+]
+env = [
+  { k = "hw", v = { en = "x86-64 under QEMU (BIOS and UEFI/OVMF); AArch64 port under QEMU", fr = "x86-64 sous QEMU (BIOS et UEFI/OVMF) ; port AArch64 sous QEMU" } },
+  { k = "lang", v = "C, NASM, GNU assembler, Python" },
+  { k = "tools", v = "x86_64-elf GCC cross-compiler, binutils, GNU Make, QEMU, GDB" },
+  { k = "test", v = "In-kernel selftests, host unit tests under ASan/UBSan, QEMU-driven integration tests" },
+]
+outcome.en = "Boots and runs in QEMU with a graphical desktop and shell. It has not been booted on a physical machine."
+outcome.fr = "Démarre et fonctionne sous QEMU avec un bureau graphique et un shell. Pas encore démarré sur une machine physique."
+
+[[project]]
+id = "embcc"
+category = "personal"
+domains = ["tooling"]
+period = { en = "Since Jul. 2026", fr = "Depuis juil. 2026" }
+title = "EmbCC"
+context = { en = "C cross-compiler toolchain for embedded targets", fr = "chaîne de compilation croisée C pour cibles embarquées" }
+repo = "EmbLinkOs/EmbCC"
+summary.en = "A dependency-free C99 compiler, assembler and linker with back-ends for common microcontroller and desktop architectures."
+summary.fr = "Un compilateur C99, un assembleur et un éditeur de liens sans dépendances, avec des back-ends pour les architectures courantes de microcontrôleurs et de PC."
+problem.en = "Own the full path from C source to a flashable image, and verify each step against established tools."
+problem.fr = "Maîtriser tout le chemin du source C à l'image flashable, en vérifiant chaque étape contre des outils établis."
+contribution = [
+  { en = "Back-ends for Cortex-M (Thumb-1 and Thumb-2), RISC-V, AVR and x86-64; linker with GNU linker-script support.", fr = "Back-ends Cortex-M (Thumb-1 et Thumb-2), RISC-V, AVR et x86-64 ; éditeur de liens compatible avec les scripts GNU ld." },
+  { en = "Firmware utilities: header and startup generation from SVD files, image packing to HEX, S-record and UF2.", fr = "Utilitaires firmware : génération d'en-têtes et de startup à partir des fichiers SVD, empaquetage en HEX, S-record et UF2." },
+  { en = "Verification: instruction encodings compared with llvm-mc and GNU as, generated programs run under QEMU and compared with GCC and Clang output.", fr = "Vérification : encodages d'instructions comparés à llvm-mc et GNU as, programmes générés exécutés sous QEMU et comparés aux sorties de GCC et Clang." },
+]
+env = [
+  { k = "lang", v = "C" },
+  { k = "tools", v = "GNU Make, configure script, QEMU, llvm-mc, GNU binutils" },
+  { k = "test", v = "GitHub Actions on Linux and macOS with GCC and Clang" },
+]
+outcome.en = "Pre-release (v0.0.1-beta). Compiles its own sources. Output is verified under QEMU and EmbSIM, not yet on physical boards."
+outcome.fr = "Pré-version (v0.0.1-beta). Compile ses propres sources. Sorties vérifiées sous QEMU et EmbSIM, pas encore sur cartes physiques."
+
+[[project]]
+id = "embsim"
+category = "personal"
+domains = ["tooling", "firmware"]
+period = { en = "Since Oct. 2026", fr = "Depuis oct. 2026" }
+title = "EmbSIM"
+context = { en = "microcontroller and circuit simulator", fr = "simulateur de microcontrôleurs et de circuits" }
+repo = "EmbLinkOs/EmbSIM"
+summary.en = "Runs unmodified firmware on simulated boards whose pins connect to a simulated circuit."
+summary.fr = "Exécute du firmware non modifié sur des cartes simulées dont les broches sont reliées à un circuit simulé."
+problem.en = "Test firmware, including my own projects, before or without the hardware, against peripheral models close to the reference manuals."
+problem.fr = "Tester du firmware, dont mes propres projets, avant ou sans le matériel, sur des modèles de périphériques proches des manuels de référence."
+contribution = [
+  { en = "Instruction-set simulators for Cortex-M (with FPU) and AVR, and peripheral models for STM32F1/F4: GPIO, RCC, timers, USART, SPI, I²C, ADC, DMA.", fr = "Simulateurs de jeux d'instructions Cortex-M (avec FPU) et AVR, et modèles de périphériques STM32F1/F4 : GPIO, RCC, timers, USART, SPI, I²C, ADC, DMA." },
+  { en = "MCU pins coupled to a modified-nodal-analysis circuit solver; GDB stub and DWARF source-level debugging.", fr = "Broches du MCU couplées à un solveur de circuit par analyse nodale modifiée ; stub GDB et debug au niveau source via DWARF." },
+]
+env = [
+  { k = "lang", v = "C, TypeScript (React), Rust (Tauri)" },
+  { k = "tools", v = "CMake, GCC, Clang, MSVC" },
+  { k = "test", v = { en = "CI runs unmodified STM32Cube, Arduino and Pico SDK examples", fr = "La CI exécute des exemples STM32Cube, Arduino et Pico SDK non modifiés" } },
+]
+outcome.en = "Early stage and not released. Circuit results are numerical checks, not claims of real-device accuracy."
+outcome.fr = "Stade précoce, non publié en version. Les résultats de circuit sont des vérifications numériques, pas une précision garantie face au composant réel."
