@@ -7,14 +7,11 @@
 
 intro.en = """
 Each project lists the problem, what I did, the tools and boards involved, and what came out of it, including what is
-not finished. Professional work is described without confidential detail. My personal projects are developed with AI
-coding assistants: I set the architecture, specifications and verification strategy, and review what goes in.
+not finished. Professional work is described without confidential detail.
 """
 intro.fr = """
 Chaque projet présente le problème, ce que j'ai fait, les outils et cartes utilisés, et le résultat, y compris ce qui
-n'est pas terminé. Les travaux professionnels sont décrits sans détail confidentiel. Mes projets personnels sont développés
-avec des assistants de programmation IA : je fixe l'architecture, les spécifications et la stratégie de vérification,
-et je relis ce qui est intégré.
+n'est pas terminé. Les travaux professionnels sont décrits sans détail confidentiel.
 """
 
 # ------------------------------------------------------------------ professional
