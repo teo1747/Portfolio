@@ -125,9 +125,13 @@
 % ---------- Variant switch ----------
 % In a main file: \hwvarianttrue  -> Embedded Software & Hardware CV
 %                 \hwvariantfalse -> Embedded Software CV
+%                 \hwvarianttrue\fpgavarianttrue -> FPGA / SoC CV (hardware text applies too)
 \newif\ifhwvariant
+\newif\iffpgavariant
 \newcommand{\HW}[1]{\ifhwvariant#1\fi}
 \newcommand{\SW}[1]{\ifhwvariant\else#1\fi}
+\newcommand{\FP}[1]{\iffpgavariant#1\fi}        % FPGA / SoC CV only
+\newcommand{\NF}[1]{\iffpgavariant\else#1\fi}   % every CV except FPGA / SoC
 
 % Group heading for project lists
 \newcommand{\cvgroup}[1]{\vspace{4pt}{\headfont\fontsize{9.6pt}{11.6pt}\selectfont\color{muted}#1}\par}

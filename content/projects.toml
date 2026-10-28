@@ -360,6 +360,44 @@ outcome.fr = "Application fonctionnelle, testée en cours avec le lecteur et des
 
 # ------------------------------------------------------------------ personal
 [[project]]
+id = "accel"
+category = "personal"
+domains = ["fpga", "firmware"]
+period = { en = "Oct. 2026", fr = "Oct. 2026" }
+title = { en = "Image-filter accelerator for Zynq-7000", fr = "Accélérateur de filtrage d'image pour Zynq-7000" }
+context = { en = "VHDL IP with AXI DMA, driven from a bare-metal Vitis application", fr = "IP VHDL avec DMA AXI, pilotée par une application Vitis bare-metal" }
+repo = "teo1747/zynq-image-filter-accelerator"
+summary.en = "A 3×3 filter IP (box, Gaussian, Sobel) streaming one pixel per clock, integrated with the Zynq ARM cores through AXI DMA."
+summary.fr = "Une IP de filtrage 3×3 (moyenneur, gaussien, Sobel) en flux à un pixel par cycle, intégrée aux cœurs ARM du Zynq via une DMA AXI."
+problem.en = """
+Offload image filtering from the Zynq's Cortex-A9 to the programmable logic, with the software in control:
+images stay in DDR, the DMA streams them through the accelerator, and the ARM configures, starts and checks
+each frame. My earlier ZedBoard video pipeline failed because nothing drove its IPs over AXI-Lite; this
+project puts that control path at the centre.
+"""
+problem.fr = """
+Décharger le filtrage d'image du Cortex-A9 du Zynq vers la logique programmable, sous contrôle du logiciel :
+les images restent en DDR, la DMA les fait passer dans l'accélérateur, et l'ARM configure, lance et vérifie
+chaque image. Ma chaîne vidéo ZedBoard précédente avait échoué faute de pilotage AXI-Lite des IP ; ce projet
+met ce chemin de contrôle au centre.
+"""
+contribution = [
+  { en = "Filter core in VHDL: two line buffers, a 3×3 window and a four-stage pipeline; border pixels pass through so the output frame has the input's size; one advance signal handles AXI4-Stream back-pressure.", fr = "Cœur de filtrage en VHDL : deux line buffers, une fenêtre 3×3 et un pipeline à quatre étages ; les pixels de bord sont recopiés pour garder la taille de l'image ; un seul signal d'avancement gère la back-pressure AXI4-Stream." },
+  { en = "AXI4-Lite register file (control, status, size, frame counter, ID); TLAST on the last pixel to end each DMA transfer, TUSER on the first.", fr = "Banc de registres AXI4-Lite (contrôle, état, taille, compteur d'images, ID) ; TLAST sur le dernier pixel pour clore chaque transfert DMA, TUSER sur le premier." },
+  { en = "TCL scripts that package the IP and build the Zynq PS7 + AXI DMA block design through bitstream and XSA.", fr = "Scripts TCL qui packagent l'IP et construisent le block design PS7 Zynq + DMA AXI jusqu'au bitstream et au XSA." },
+  { en = "Vitis bare-metal application: DMA transfers with cache maintenance, a per-pixel check against the C model, and hardware versus software timing.", fr = "Application Vitis bare-metal : transferts DMA avec gestion du cache, vérification pixel par pixel contre le modèle C, comparaison des temps matériel et logiciel." },
+  { en = "Bit-exact C reference model and a self-checking VHDL-2008 testbench with random stalls on both streams, run in CI with GHDL; injected faults confirm the bench catches errors.", fr = "Modèle C de référence bit-exact et banc de test VHDL-2008 auto-vérifiant avec blocages aléatoires sur les deux flux, exécuté en CI avec GHDL ; des fautes injectées confirment que le banc détecte les erreurs." },
+]
+env = [
+  { k = "hw", v = { en = "Zynq-7000 (ZedBoard, xc7z020)", fr = "Zynq-7000 (ZedBoard, xc7z020)" } },
+  { k = "lang", v = "VHDL, C, TCL" },
+  { k = "tools", v = "Vivado (IP packager, IP integrator), Vitis, GHDL" },
+  { k = "proto", v = "AXI4-Lite, AXI4-Stream, AXI DMA" },
+  { k = "test", v = { en = "Self-checking testbench, 14 frames, 4 modes, GitHub Actions", fr = "Banc de test auto-vérifiant, 14 images, 4 modes, GitHub Actions" } },
+]
+outcome.en = "All simulated frames match the C model bit for bit, and a frame takes about (W+1)(H+1) cycles. The Vivado build and the board run are the next step; resource, timing and speed-up figures will be added once measured on a ZedBoard."
+outcome.fr = "Toutes les images simulées correspondent bit à bit au modèle C, et une image prend environ (W+1)(H+1) cycles. La construction Vivado et l'essai sur carte sont la prochaine étape ; utilisation, timing et accélération seront ajoutés une fois mesurés sur ZedBoard."
+[[project]]
 id = "rtos"
 category = "personal"
 domains = ["rtos", "firmware", "tooling"]

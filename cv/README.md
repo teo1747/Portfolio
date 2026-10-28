@@ -1,6 +1,6 @@
 # CV sources — Junior Deogracias Mambo Motsou
 
-Four CVs built from one set of content blocks:
+Six CVs built from one set of content blocks:
 
 | File | Role | Language |
 |---|---|---|
@@ -8,6 +8,8 @@ Four CVs built from one set of content blocks:
 | `cv-hwsw-fr.tex` | Ingénieur logiciel et matériel embarqué | Français |
 | `cv-sw-en.tex` | Embedded Software Engineer | English |
 | `cv-sw-fr.tex` | Ingénieur logiciel embarqué | Français |
+| `cv-fpga-en.tex` | FPGA & SoC Engineer | English |
+| `cv-fpga-fr.tex` | Ingénieur FPGA & SoC | Français |
 
 ## Layout
 
@@ -15,10 +17,10 @@ Four CVs built from one set of content blocks:
 cvstyle.sty        layout: fonts, colours, section/entry macros, variant switch
 en/blocks.tex      every CV block in English (written once)
 fr/blocks.tex      the same blocks in French
-cv-*-*.tex         the four main files: pick blocks and their order
+cv-*-*.tex         the six main files: pick blocks and their order
 fonts/             Archivo static instances (SIL Open Font License, see fonts/OFL.txt)
 latexmkrc          tells latexmk / Overleaf to use XeLaTeX
-build.sh           builds all four PDFs into ./pdf
+build.sh           builds all six PDFs into ./pdf (and copies them to ../assets/cv)
 ```
 
 ## Compile
@@ -30,7 +32,7 @@ Choose which CV to build with *Menu → Main document*.
 **Locally** (TeX Live with XeLaTeX and latexmk):
 
 ```sh
-./build.sh                 # all four → pdf/
+./build.sh                 # all six → pdf/
 latexmk cv-sw-en.tex       # just one
 ```
 
@@ -40,8 +42,9 @@ latexmk cv-sw-en.tex       # just one
   same name in `fr/blocks.tex`. Every CV that uses it updates.
 - **Change which projects a CV shows, or their order:** edit the list between `\begin{document}` and
   `\end{document}` in that `cv-*.tex` file.
-- **Text that only one variant should show:** wrap it in `\HW{...}` (Software & Hardware CV) or
-  `\SW{...}` (Software CV). Whole bullets work too: `\HW{\item ...}`.
+- **Text that only some variants should show:** `\HW{...}` appears in the Software & Hardware and the
+  FPGA/SoC CVs, `\SW{...}` only in the Software CV, `\FP{...}` only in the FPGA/SoC CV, `\NF{...}` in
+  every CV except FPGA/SoC. Whole bullets work too: `\HW{\item ...}`.
 - **Dates, phone, availability:** `\forviadates`, `\phone`, `\availability`, `\iucplace`, `\iucdates`
   are defined near the top of each `blocks.tex`.
 - **Entry macros** (in `cvstyle.sty`):

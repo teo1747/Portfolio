@@ -55,8 +55,8 @@ J'ai grandi au Cameroun ; l'anglais est ma langue maternelle et je travaille en 
 contact_text.en = "The quickest way to reach me is by email. I am available now for a permanent position in France."
 contact_text.fr = "Le plus simple pour me joindre est l'e-mail. Je suis disponible immédiatement pour un CDI en France."
 
-cv_text.en = "Two versions, each in English and French. Pick the one closest to the role."
-cv_text.fr = "Deux versions, chacune en français et en anglais. Choisissez celle qui correspond le mieux au poste."
+cv_text.en = "Three versions, each in English and French: embedded software and hardware, embedded software, and FPGA/SoC. Pick the one closest to the role."
+cv_text.fr = "Trois versions, chacune en français et en anglais : logiciel et matériel embarqués, logiciel embarqué, et FPGA/SoC. Choisissez celle qui correspond le mieux au poste."
 
 [[facts]]
 k = { en = "Degree", fr = "Diplôme" }
@@ -66,7 +66,7 @@ k = { en = "Last role", fr = "Dernier poste" }
 v = { en = "Apprentice embedded engineer, FORVIA, 2025–2026", fr = "Ingénieur systèmes embarqués en alternance, FORVIA, 2025–2026" }
 [[facts]]
 k = { en = "Looking for", fr = "Recherche" }
-v = { en = "Embedded software, or embedded software and hardware", fr = "Logiciel embarqué, ou logiciel et matériel embarqués" }
+v = { en = "Embedded software, embedded hardware/software, or FPGA/SoC design", fr = "Logiciel embarqué, logiciel et matériel embarqués, ou conception FPGA/SoC" }
 [[facts]]
 k = { en = "Location", fr = "Localisation" }
 v = { en = "France, available now", fr = "France, disponible immédiatement" }
@@ -110,3 +110,12 @@ title = { en = "Ingénieur logiciel et matériel embarqué", fr = "Ingénieur lo
 lang = "fr"
 file = "CV_MamboMotsou_Ingenieur-Logiciel-Embarque_FR.pdf"
 title = { en = "Ingénieur logiciel embarqué", fr = "Ingénieur logiciel embarqué" }
+
+[[cv]]
+lang = "en"
+file = "CV_MamboMotsou_FPGA-SoC-Engineer_EN.pdf"
+title = { en = "FPGA & SoC Engineer", fr = "FPGA & SoC Engineer" }
+[[cv]]
+lang = "fr"
+file = "CV_MamboMotsou_Ingenieur-FPGA-SoC_FR.pdf"
+title = { en = "Ingénieur FPGA & SoC", fr = "Ingénieur FPGA & SoC" }

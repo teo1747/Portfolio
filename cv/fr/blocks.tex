@@ -21,7 +21,12 @@
 % ---------------------------------------------------------------- profil
 \newcommand{\BlkProfile}{%
 \section{Profil}
-\HW{Ingénieur systèmes embarqués (Polytech Dijon, 2026) couvrant firmware, électronique et matériel numérique. Chez FORVIA, j'ai mené la mise en route du firmware sur de nouveaux composants
+\FP{Ingénieur systèmes embarqués (Polytech Dijon, 2026) orienté conception numérique sur FPGA et SoC Zynq :
+RTL en VHDL, interfaces AXI4-Lite et AXI4-Stream, intégration d'IP et block design sous Vivado, et le
+logiciel bare-metal qui pilote le matériel depuis Vitis. Je vérifie le RTL contre des modèles C bit-exacts
+avec des bancs de test auto-vérifiants. Une année de mise en route firmware automobile chez FORVIA
+m'apporte la vision système.}%
+\NF{\HW{Ingénieur systèmes embarqués (Polytech Dijon, 2026) couvrant firmware, électronique et matériel numérique. Chez FORVIA, j'ai mené la mise en route du firmware sur de nouveaux composants
 automobiles (contrôleur de chauffe LIN, nœuds LED MeLiBu) et développé le logiciel d'un démonstrateur
 d'éclairage à neuf gateways. Je travaille à partir des datasheets, je localise les défauts côté matériel
 ou logiciel et je valide sur banc ; la conception VHDL/FPGA complète ce profil.}%
@@ -29,7 +34,7 @@ ou logiciel et je valide sur banc ; la conception VHDL/FPGA complète ce profil.
 temps réel et outillage associé. Chez FORVIA, j'ai développé et débogué du firmware pour
 microcontrôleurs automobiles ainsi qu'une chaîne de pilotage multithread Python/Kotlin pour un démonstrateur
 d'éclairage. Dans mes projets personnels, je développe un RTOS, un OS x86-64 et une chaîne de compilation C,
-avec un soin particulier pour le build, la CI et les tests.}\par}
+avec un soin particulier pour le build, la CI et les tests.}}\par}
 
 % ---------------------------------------------------------------- compétences
 \newcommand{\BlkSkillsHW}{%
@@ -61,12 +66,42 @@ avec un soin particulier pour le build, la CI et les tests.}\par}
 \cvskill{Interfaces}{UART, SPI, I²C, LIN, MeLiBu, Bluetooth série avec protocole JSON, clients REST/HTTP}
 \cvskill{Applications}{Python multithread (PyQt5, OpenCV), Qt/C++, Android (Kotlin, Jetpack Compose)}\par}
 
+\newcommand{\BlkSkillsFPGA}{%
+\section{Compétences techniques}
+\cvskill{HDL \& conception}{VHDL (RTL synthétisable, bancs de test VHDL-2008), Verilog (bases) ; machines
+  d'états, chemins de données pipelinés, line buffers, gestion de la croissance en bits, handshakes AXI avec
+  back-pressure, E/S bidirectionnelles}
+\cvskill{Flot AMD/Xilinx}{Vivado : block design sous IP integrator, packaging d'IP, synthèse, implémentation,
+  XDC, rapports de timing et d'utilisation, bitstream, ILA et Hardware Manager ; Vitis HLS ; applications
+  bare-metal Vitis ; scripts TCL du flot}
+\cvskill{Composants \& cartes}{Zynq-7000 (ZedBoard, xc7z020), Artix-7 (Nexys 4 DDR, xc7a100t)}
+\cvskill{Interfaces \& IP}{AXI4-Lite, AXI4-Stream, AXI DMA, PS7 Zynq (ports GP/HP), Video Timing Controller,
+  Clocking Wizard, FIFO Generator ; VGA, I²C, UART, SPI, SRAM ZBT}
+\cvskill{Vérification}{Bancs de test auto-vérifiants, modèles C de référence bit-exacts, injection de
+  blocages aléatoires ; GHDL, XSim, ModelSim ; simulation en CI sur GitHub Actions}
+\cvskill{Logiciel embarqué}{C (bare-metal, drivers standalone Xilinx, CMSIS), FreeRTOS, Zephyr ; Python, TCL}
+\cvskill{Debug}{ILA, JTAG / Hardware Manager, J-Link, GDB, consoles série}\par}
+
 % ---------------------------------------------------------------- FORVIA
 \newcommand{\BlkForvia}{%
 \cventry{Ingénieur systèmes embarqués --- contrat de professionnalisation}
   {FORVIA -- Faurecia Interior Systems}{département Surface Activation, France}{\forviadates}
-\HW{\BlkForviaTCU\BlkForviaMeli\BlkForviaLight}%
-\SW{\BlkForviaLight\BlkForviaTCU\BlkForviaMeli}}
+\FP{\BlkForviaShort}%
+\NF{\HW{\BlkForviaTCU\BlkForviaMeli\BlkForviaLight}%
+\SW{\BlkForviaLight\BlkForviaTCU\BlkForviaMeli}}}
+
+% version condensée pour le CV FPGA / SoC
+\newcommand{\BlkForviaShort}{%
+\begin{itemize}
+  \item Mise en route firmware sur Infineon TLD4020-3ET (Cortex-M23, LIN) pour un contrôleur d'élément
+    chauffant : commandes LIN, PWM via le LDRV, régulation CTN ; HardFault attribué à une révision de
+    silicium, échantillonnage ADC synchronisé sur la PWM (ISR à mi-impulsion, moyenne sur 16 mesures).
+  \item Portage d'un driver LED MeLiBu sur RP2040 (machines d'états PIO) du MLX81116 vers le MLX81143 pour
+    un panneau de 154 LED ; correction du timing bus (break, section critique, vidage de la FIFO TX).
+  \item Responsable logiciel d'un démonstrateur d'éclairage intérieur : Python multithread pilotant neuf
+    gateways UART STM32 synchronisées à 921\,600 bauds, pilotage par tablette Android en Bluetooth.
+\end{itemize}
+\cvenv{Environnement\,:}{IAR EWARM, J-Link, Pico SDK, Python/PyQt5, Kotlin, STM32, LIN, MeLiBu, UART}}
 \newcommand{\forviadates}{sept.\ 2025 -- sept.\ 2026}
 
 \newcommand{\BlkForviaTCU}{%
@@ -196,9 +231,11 @@ avec un soin particulier pour le build, la CI et les tests.}\par}
 
 % ---------------------------------------------------------------- projets personnels
 \newcommand{\BlkPersonalNote}{%
-\vspace{1pt}{\fontsize{8.4pt}{10.6pt}\selectfont\color{muted}En cours. Je définis l'architecture, les
+\vspace{1pt}{\fontsize{8.4pt}{10.6pt}\selectfont\color{muted}\FP{Projets personnels. Je fixe l'architecture et
+le plan de vérification ; l'implémentation est assistée par des outils de programmation IA. Vérifiés en
+simulation et en émulation, pas encore sur cartes physiques.}\NF{En cours. Je définis l'architecture, les
 spécifications et la stratégie de vérification ; l'implémentation est assistée par des outils de
-programmation IA. Validation à ce stade en émulation (QEMU, EmbSIM), pas encore sur cartes physiques.\par}}
+programmation IA. Validation à ce stade en émulation (QEMU, EmbSIM), pas encore sur cartes physiques.}\par}}
 
 \newcommand{\BlkRtos}{%
 \cvproject{EmbLinkRTOS --- RTOS préemptif pour microcontrôleurs}{personnel}{depuis oct.\ 2026}{github.com/EmbLinkOs/EmbLinkRTOS}
@@ -249,11 +286,25 @@ programmation IA. Validation à ce stade en émulation (QEMU, EmbSIM), pas encor
 \end{itemize}
 \cvenv{Environnement\,:}{NUCLEO-F446RE, FreeRTOS 11, CMSIS, arm-none-eabi-gcc, CMake, Ninja}}
 
+\newcommand{\BlkAccel}{%
+\cvproject{Accélérateur de filtrage d'image pour Zynq-7000 avec DMA AXI}{personnel}{oct.\ 2026}{github.com/teo1747/zynq-image-filter-accelerator}
+\begin{itemize}
+  \item IP de filtrage 3×3 en flux en VHDL (moyenneur, gaussien, Sobel), un pixel par cycle : line buffers,
+    pipeline à 4 étages, back-pressure AXI4-Stream complète, tramage TLAST/TUSER ; registres de contrôle et
+    d'état AXI4-Lite ; IP packagée pour IP integrator.
+  \item Block design PS7 Zynq + DMA AXI scripté en TCL jusqu'au bitstream et au XSA ; application Vitis
+    bare-metal qui envoie les images depuis la DDR, vérifie chaque pixel contre le modèle C et compare les
+    temps matériel et logiciel.
+  \item Bit-exact face à une référence C dans un banc de test GHDL auto-vérifiant avec blocages aléatoires
+    sur les deux flux (14 images, exécuté en CI). Essai sur ZedBoard à venir.
+\end{itemize}
+\cvenv{Environnement\,:}{VHDL, C, TCL, Vivado, Vitis, GHDL, Zynq-7000 (xc7z020)}}
+
 % ---------------------------------------------------------------- formation & langues
 \newcommand{\BlkEducation}{%
 \section{Formation \& langues}
 \cvedu{Diplôme d'ingénieur (Bac+5) --- Systèmes embarqués}{Polytech Dijon}{Dijon}{2023 -- sept.\ 2026}
-{\color{muted}Diplômé. Dernière année en alternance chez FORVIA. Enseignements : électronique, PCB, temps réel, SoC/FPGA.\par}
+{\color{muted}Diplômé. Dernière année en alternance chez FORVIA. \FP{Enseignements : conception numérique, SoC sur Zynq (Vivado, Vitis, Vitis HLS), temps réel.}\NF{Enseignements : électronique, PCB, temps réel, SoC/FPGA.}\par}
 \cvedu{Classes préparatoires (2 ans) --- mathématiques, physique, électronique}{IUC}{\iucplace}{\iucdates}
 \vspace{4pt}
 \cvskill{Langues}{Anglais : langue maternelle (anglophone), TOEIC C1 (2024)\sep Français : courant (B2)}
