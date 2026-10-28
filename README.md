@@ -15,6 +15,7 @@ content/          all site text, one TOML file per section (bilingual)
   ui.toml           interface strings (buttons, labels, categories)
 assets/           style.css, site.js, fonts, favicon, cv/ (downloadable PDFs)
 build.py          static site generator (Python 3.11+, standard library only)
+diagrams.py       technical diagrams drawn as inline SVG
 404.html          not-found page
 cv/               LaTeX sources of the four CVs (see cv/README.md)
 .github/workflows/pages.yml   builds and publishes the site on every push to main
@@ -34,6 +35,16 @@ cv/               LaTeX sources of the four CVs (see cv/README.md)
 **Add a project:** copy a `[[project]]` block in `content/projects.toml`, give it a unique `id`, a
 `category` (`professional`, `academic` or `personal`), `domains` from `ui.toml [domains]`, and `env` rows
 using the keys in `ui.toml [env]`. Order in the file is the order on the page.
+
+**Project images:** each project can have one visual.
+- `image = "therm.jpg"` uses a file in `assets/img/projects/` (keep it under about 1,280 px wide). Clicking it opens it full size.
+  Add `image_fit = "contain"` for screenshots that must not be cropped.
+- `image = "diagram:tcu"` draws one of the technical diagrams in `diagrams.py` (inline SVG, follows light and dark mode).
+  To add a diagram, write a function there and register it in `DIAGRAMS`.
+- `image_alt` describes the picture for screen readers; `image_caption` is shown under it.
+- `featured = true` puts the project first, as a wide card.
+
+**Portrait:** replace `assets/img/portrait.jpg` (4:5, about 640 × 800 px).
 
 ## Update the CVs
 

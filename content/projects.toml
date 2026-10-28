@@ -20,6 +20,9 @@ et je relis ce qui est intégré.
 # ------------------------------------------------------------------ professional
 [[project]]
 id = "tcu"
+image = "diagram:tcu"
+featured = true
+image_caption = { en = "Sampling scheme: the ADC reads the switched NTC divider in the middle of each PWM pulse.", fr = "Principe d'échantillonnage : l'ADC lit le pont CTN commuté au milieu de chaque impulsion PWM." }
 category = "professional"
 domains = ["firmware", "automotive", "bringup"]
 period = { en = "FORVIA, 2025–2026", fr = "FORVIA, 2025–2026" }
@@ -65,6 +68,8 @@ d'évaluation ; la carte TCU de série était prévue pour une phase ultérieure
 
 [[project]]
 id = "melibu"
+image = "diagram:melibu"
+image_caption = { en = "Panel layout: 11 MLX81143 nodes of 14 RGB LEDs on one MeLiBu bus.", fr = "Organisation du panneau : 11 nœuds MLX81143 de 14 LED RVB sur un bus MeLiBu." }
 category = "professional"
 domains = ["firmware", "automotive", "bringup"]
 period = { en = "FORVIA, 2025–2026", fr = "FORVIA, 2025–2026" }
@@ -100,6 +105,9 @@ outcome.fr = "Le panneau MLX81143 est piloté avec l'adressage, les couleurs et 
 
 [[project]]
 id = "lighting"
+image = "diagram:lighting"
+featured = true
+image_caption = { en = "Control path: tablet to PC over Bluetooth, then one thread per gateway, kept in step by a barrier.", fr = "Chaîne de pilotage : tablette vers PC en Bluetooth, puis un thread par gateway, synchronisés par une barrière." }
 category = "professional"
 domains = ["software", "automotive", "firmware"]
 period = { en = "FORVIA, 2025–2026", fr = "FORVIA, 2025–2026" }
@@ -136,6 +144,8 @@ outcome.fr = "En fonctionnement sur le buck de démonstration avec neuf gateways
 
 [[project]]
 id = "fruit"
+image = "diagram:fruit"
+image_caption = { en = "Transfer-learning pipeline on VGG16.", fr = "Chaîne de transfer learning sur VGG16." }
 category = "professional"
 domains = ["software", "vision"]
 period = { en = "KMUTT internship, 2025", fr = "Stage KMUTT, 2025" }
@@ -159,6 +169,8 @@ outcome.fr = "98,4 % de bonnes classifications et un F1 macro de 0,983 sur le je
 
 [[project]]
 id = "mcu8"
+image = "diagram:mcu8"
+image_caption = { en = "CPU blocks and memory map.", fr = "Blocs du processeur et plan mémoire." }
 category = "professional"
 domains = ["fpga"]
 period = { en = "KMUTT internship, 2025", fr = "Stage KMUTT, 2025" }
@@ -185,6 +197,9 @@ outcome.fr = "Exécute des programmes en simulation. Pas déployé sur carte."
 # ------------------------------------------------------------------ academic
 [[project]]
 id = "therm"
+image = "therm.jpg"
+image_alt = { en = "Explorer 16/32 board showing the temperature and time on its LCD", fr = "Carte Explorer 16/32 affichant la température et l'heure sur son LCD" }
+image_caption = { en = "RT-Therm V2 running on the Explorer 16/32 board.", fr = "RT-Therm V2 en fonctionnement sur la carte Explorer 16/32." }
 category = "academic"
 domains = ["firmware", "rtos"]
 period = "2025–2026"
@@ -211,6 +226,9 @@ outcome.fr = "Les deux versions ont fonctionné sur la carte Explorer 16/32 en T
 
 [[project]]
 id = "zephyr"
+image = "zephyr.jpg"
+image_alt = { en = "NUCLEO board wired to the I²C sensors, with the Zephyr console on the laptop", fr = "Carte NUCLEO câblée aux capteurs I²C, avec la console Zephyr sur le PC" }
+image_caption = { en = "NUCLEO board, sensors and OLED on I²C, with the Zephyr console.", fr = "Carte NUCLEO, capteurs et OLED en I²C, avec la console Zephyr." }
 category = "academic"
 domains = ["firmware", "rtos"]
 period = "2025–2026"
@@ -236,6 +254,8 @@ outcome.fr = "Fonctionnel sur la carte ; le rapport relève la petite police et 
 
 [[project]]
 id = "sram"
+image = "diagram:sram"
+image_caption = { en = "Controller state machine and the bidirectional 36-bit data bus.", fr = "Machine d'états du contrôleur et bus de données bidirectionnel de 36 bits." }
 category = "academic"
 domains = ["fpga"]
 period = "2025–2026"
@@ -260,6 +280,10 @@ outcome.fr = "Le contrôleur actuel passe son banc de test auto-vérifiant en si
 
 [[project]]
 id = "video"
+image = "video.png"
+image_fit = "contain"
+image_alt = { en = "Integrated Logic Analyzer capture of the hsync and vsync signals", fr = "Capture de l'Integrated Logic Analyzer des signaux hsync et vsync" }
+image_caption = { en = "ILA capture of hsync and vsync, taken on the ZedBoard.", fr = "Capture ILA de hsync et vsync, prise sur la ZedBoard." }
 category = "academic"
 domains = ["fpga"]
 period = "2025–2026"
@@ -286,6 +310,8 @@ outcome.fr = "La synchronisation était correcte sur le matériel, mais la démo
 
 [[project]]
 id = "filter"
+image = "diagram:filter"
+image_caption = { en = "Sliding 3×3 window over the pixel stream and the pipelined adder tree.", fr = "Fenêtre 3×3 glissante sur le flux de pixels et arbre d'additionneurs pipeliné." }
 category = "academic"
 domains = ["fpga"]
 period = "2024–2025"
@@ -311,6 +337,8 @@ outcome.fr = "Les sorties correspondent pixel à pixel à une référence logici
 
 [[project]]
 id = "tempmon"
+image = "diagram:tempmon"
+image_caption = { en = "Data path from the sensor to the display and UART (display value illustrative).", fr = "Chemin des données du capteur à l'afficheur et à l'UART (valeur affichée à titre d'illustration)." }
 category = "academic"
 domains = ["fpga"]
 period = "2024–2025"
@@ -335,6 +363,10 @@ outcome.fr = "Implémenté à 100 MHz avec une marge (WNS) de +5,42 ns, sur 1 93
 
 [[project]]
 id = "mifare"
+image = "mifare.png"
+image_fit = "contain"
+image_alt = { en = "Qt application window with identity fields and wallet controls", fr = "Fenêtre de l'application Qt avec les champs d'identité et les commandes du porte-monnaie" }
+image_caption = { en = "The Qt wallet application.", fr = "L'application porte-monnaie en Qt." }
 category = "academic"
 domains = ["software"]
 period = "2024"
@@ -361,6 +393,11 @@ outcome.fr = "Application fonctionnelle, testée en cours avec le lecteur et des
 # ------------------------------------------------------------------ personal
 [[project]]
 id = "accel"
+image = "accel.jpg"
+image_fit = "contain"
+featured = true
+image_alt = { en = "Test image, then its Gaussian-filtered and Sobel-filtered versions", fr = "Image de test, puis ses versions filtrées gaussien et Sobel" }
+image_caption = { en = "Input, Gaussian and Sobel outputs of the bit-exact model the RTL matches in simulation.", fr = "Entrée, sorties gaussienne et Sobel du modèle bit-exact que le RTL reproduit en simulation." }
 category = "personal"
 domains = ["fpga", "firmware"]
 period = { en = "Oct. 2026", fr = "Oct. 2026" }
@@ -399,6 +436,8 @@ outcome.en = "All simulated frames match the C model bit for bit, and a frame ta
 outcome.fr = "Toutes les images simulées correspondent bit à bit au modèle C, et une image prend environ (W+1)(H+1) cycles. La construction Vivado et l'essai sur carte sont la prochaine étape ; utilisation, timing et accélération seront ajoutés une fois mesurés sur ZedBoard."
 [[project]]
 id = "rtos"
+image = "diagram:rtos"
+image_caption = { en = "Priority inheritance: the low thread holding the mutex runs at high priority until it releases it.", fr = "Héritage de priorité : le thread bas qui tient le mutex s'exécute en priorité haute jusqu'à le libérer." }
 category = "personal"
 domains = ["rtos", "firmware", "tooling"]
 period = { en = "Since Oct. 2026", fr = "Depuis oct. 2026" }
@@ -426,6 +465,10 @@ outcome.fr = "Threads, gestion du temps, sémaphores et mutex sont implémentés
 
 [[project]]
 id = "access"
+image = "access.png"
+image_fit = "contain"
+image_alt = { en = "Six OLED screens: idle clock, PIN entry, access granted, denied, locked out, alarm", fr = "Six écrans OLED : horloge, saisie du PIN, accès accordé, refusé, verrouillé, alarme" }
+image_caption = { en = "OLED screens of the terminal, rendered in simulation.", fr = "Écrans OLED du terminal, rendus en simulation." }
 category = "personal"
 domains = ["firmware", "rtos"]
 period = { en = "Oct. 2026", fr = "Oct. 2026" }
@@ -452,6 +495,10 @@ outcome.fr = "Tous les tests unitaires et scénarios système simulés passent ;
 
 [[project]]
 id = "emblinkos"
+image = "emblinkos.jpg"
+featured = true
+image_alt = { en = "EmbLinkOS desktop with a file manager window and a dock", fr = "Bureau d'EmbLinkOS avec un gestionnaire de fichiers et un dock" }
+image_caption = { en = "EmbLinkOS desktop running under QEMU.", fr = "Bureau d'EmbLinkOS sous QEMU." }
 category = "personal"
 domains = ["os", "tooling"]
 period = { en = "Since May 2026", fr = "Depuis mai 2026" }
@@ -479,6 +526,8 @@ outcome.fr = "Démarre et fonctionne sous QEMU avec un bureau graphique et un sh
 
 [[project]]
 id = "embcc"
+image = "diagram:embcc"
+image_caption = { en = "One C front end, four back ends, then assembler and linker.", fr = "Un front end C, quatre back-ends, puis assembleur et éditeur de liens." }
 category = "personal"
 domains = ["tooling"]
 period = { en = "Since Jul. 2026", fr = "Depuis juil. 2026" }
@@ -504,6 +553,9 @@ outcome.fr = "Pré-version (v0.0.1-beta). Compile ses propres sources. Sorties v
 
 [[project]]
 id = "embsim"
+image = "embsim.jpg"
+image_alt = { en = "3D view of a simulated Arduino Uno wired on a breadboard", fr = "Vue 3D d'un Arduino Uno simulé câblé sur une plaque d'essai" }
+image_caption = { en = "Simulated bench: Arduino Uno and breadboard in the 3D view.", fr = "Banc simulé : Arduino Uno et plaque d'essai en vue 3D." }
 category = "personal"
 domains = ["tooling", "firmware"]
 period = { en = "Since Oct. 2026", fr = "Depuis oct. 2026" }

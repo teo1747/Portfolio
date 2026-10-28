@@ -18,6 +18,8 @@ environment = { en = "Technical environment", fr = "Environnement technique" }
 outcome = { en = "Outcome", fr = "Résultat" }
 source = { en = "Source code on GitHub", fr = "Code source sur GitHub" }
 domains_label = { en = "Domains", fr = "Domaines" }
+portrait_alt = { en = "Portrait of Junior Deogracias Mambo Motsou", fr = "Portrait de Junior Deogracias Mambo Motsou" }
+close = { en = "Close", fr = "Fermer" }
 
 [lang_name]
 en = { en = "English", fr = "English" }

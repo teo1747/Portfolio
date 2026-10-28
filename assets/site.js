@@ -44,3 +44,28 @@
   show("all");
   openTarget();
 })();
+
+// Lightbox for project photos and screenshots. Without JS the link opens the image.
+(function () {
+  var links = document.querySelectorAll("a[data-zoom]");
+  if (!links.length || typeof HTMLDialogElement === "undefined") return;
+  var fr = document.documentElement.lang === "fr";
+  var dlg = document.createElement("dialog");
+  dlg.className = "lightbox";
+  dlg.innerHTML = '<button type="button">' + (fr ? "Fermer" : "Close") + '</button><img alt=""><p></p>';
+  document.body.appendChild(dlg);
+  var img = dlg.querySelector("img"), cap = dlg.querySelector("p");
+  dlg.querySelector("button").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg || ev.target === img) dlg.close(); });
+  links.forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      var thumb = a.querySelector("img");
+      var fc = a.parentElement.querySelector("figcaption");
+      img.src = a.href;
+      img.alt = thumb ? thumb.alt : "";
+      cap.textContent = fc ? fc.textContent : "";
+      dlg.showModal();
+    });
+  });
+})();

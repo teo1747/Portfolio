@@ -19,6 +19,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+from diagrams import DIAGRAMS
+
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content"
 OUT = ROOT / "_site"
@@ -170,7 +172,25 @@ def render_experience(exp: list, ui: dict, lang: str) -> str:
     return "".join(out)
 
 
-def render_projects(projects: list, ui: dict, lang: str) -> str:
+def render_media(p: dict, lang: str, base: str) -> str:
+    """Photo/screenshot (opens full size) or inline technical diagram."""
+    img = p.get("image")
+    if not img:
+        return ""
+    cap_text = t(p.get("image_caption"), lang)
+    caption = f'<figcaption>{inline(cap_text)}</figcaption>' if cap_text else ""
+    if img.startswith("diagram:"):
+        name = img.split(":", 1)[1]
+        svg = DIAGRAMS[name]().replace('id="ah"', f'id="ah-{name}"').replace("url(#ah)", f"url(#ah-{name})")
+        return f'<figure class="proj-media is-diagram">{svg}{caption}</figure>'
+    alt = t(p.get("image_alt"), lang) or t(p["title"], lang)
+    fit = " is-contain" if p.get("image_fit") == "contain" else ""
+    src = f"{base}assets/img/projects/{img}"
+    return (f'<figure class="proj-media{fit}"><a class="zoom" href="{e(src)}" data-zoom>'
+            f'<img src="{e(src)}" alt="{e(alt)}" loading="lazy" decoding="async"></a>{caption}</figure>')
+
+
+def render_projects(projects: list, ui: dict, lang: str, base: str = "") -> str:
     cats = ui["categories"]
     filt = ['<div class="filters" role="group" aria-label="{}">'.format(e(t(ui["filter_label"], lang)))]
     filt.append(f'<button type="button" class="chip" aria-pressed="true" data-filter="all">{e(t(ui["all"], lang))}</button>')
@@ -179,7 +199,8 @@ def render_projects(projects: list, ui: dict, lang: str) -> str:
     filt.append("</div>")
 
     cards = []
-    for p in projects:
+    ordered = sorted(projects, key=lambda q: 0 if q.get("featured") else 1)
+    for p in ordered:
         repo = ""
         if p.get("repo"):
             repo = (f'<a class="repo" href="https://github.com/{e(p["repo"])}" rel="noopener">'
@@ -188,8 +209,8 @@ def render_projects(projects: list, ui: dict, lang: str) -> str:
         contrib = "".join(f"<li>{inline(t(c, lang))}</li>" for c in p.get("contribution", []))
         note = f'<p class="note">{inline(t(p["note"], lang))}</p>' if p.get("note") else ""
         cards.append(
-            f'<article class="proj" data-cat="{e(p["category"])}" id="p-{e(p["id"])}">'
-            f'<header><p class="proj-meta"><span class="cat cat-{e(p["category"])}">{e(t(cats[p["category"]], lang))}</span>'
+            f'<article class="proj{" featured" if p.get("featured") else ""}" data-cat="{e(p["category"])}" id="p-{e(p["id"])}">'
+            f'{render_media(p, lang, base)}<div class="proj-body"><header><p class="proj-meta"><span class="cat cat-{e(p["category"])}">{e(t(cats[p["category"]], lang))}</span>'
             f'<span>{e(t(p["period"], lang))}</span></p>'
             f'<h3>{e(t(p["title"], lang))}</h3>'
             f'<p class="proj-ctx">{inline(cap(t(p["context"], lang)))}</p></header>'
@@ -200,7 +221,7 @@ def render_projects(projects: list, ui: dict, lang: str) -> str:
             f'<h4>{e(t(ui["contribution"], lang))}</h4><ul>{contrib}</ul>'
             f'<h4>{e(t(ui["environment"], lang))}</h4>{env_list(p["env"], ui, lang)}'
             f'<h4>{e(t(ui["outcome"], lang))}</h4>{paras(t(p["outcome"], lang))}{note}'
-            f'</div></details>{repo}</article>'
+            f'</div></details>{repo}</div></article>'
         )
     return "".join(filt) + f'<div class="projects" aria-live="polite">{"".join(cards)}</div>'
 
@@ -255,13 +276,14 @@ def render_page(lang: str, data: dict) -> str:
     nav = "".join(f'<li><a href="#{k}">{e(t(v, lang))}</a></li>' for k, v in nav_items)
 
     hero = (
-        f'<section class="hero" aria-labelledby="name">'
+        f'<section class="hero" aria-labelledby="name"><div class="hero-top">'
         f'<div class="hero-text"><h1 id="name">{e(meta["name"])}</h1>'
         f'<p class="role">{e(t(prof["hero"]["role"], lang))}</p>'
         f'{paras(t(prof["hero"]["intro"], lang))}'
         f'<p class="actions"><a class="btn btn-main" href="#cv">{e(t(ui["download_cv"], lang))}</a>'
         f'<a class="btn" href="mailto:{e(meta["email"])}">{e(t(ui["email_me"], lang))}</a>'
         f'<a class="btn" href="https://github.com/{e(meta["github"])}" rel="me noopener">GitHub</a></p></div>'
+        f'<figure class="portrait"><span class="refdes" aria-hidden="true">U1</span><img src="{base}assets/img/portrait.jpg" alt="{e(t(ui["portrait_alt"], lang))}" width="640" height="800"></figure></div>'
         f'{uart_svg(prof["hero"]["wave_text"], t(prof["hero"]["wave_caption"], lang), lang)}'
         f'</section>'
     )
@@ -287,7 +309,8 @@ def render_page(lang: str, data: dict) -> str:
         profile,
         section("experience", t(ui["nav"]["experience"], lang), render_experience(data["experience"]["job"], ui, lang)),
         section("projects", t(ui["nav"]["projects"], lang),
-                paras(t(data["projects"]["intro"], lang)) + render_projects(data["projects"]["project"], ui, lang)),
+                paras(t(data["projects"]["intro"], lang)) + render_projects(data["projects"]["project"], ui, lang, base),
+                "sec-wide"),
         section("skills", t(ui["nav"]["skills"], lang), render_skills(data["skills"]["group"], lang)),
         section("education", t(ui["nav"]["education"], lang), render_education(data["profile"]["education"], lang)),
         section("cv", t(ui["nav"]["cv"], lang),
