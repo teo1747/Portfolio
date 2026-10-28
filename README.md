@@ -17,7 +17,7 @@ assets/           style.css, site.js, fonts, favicon, cv/ (downloadable PDFs)
 build.py          static site generator (Python 3.11+, standard library only)
 diagrams.py       technical diagrams drawn as inline SVG
 404.html          not-found page
-cv/               LaTeX sources of the four CVs (see cv/README.md)
+cv/               LaTeX sources of the six CVs (see cv/README.md)
 .github/workflows/pages.yml   builds and publishes the site on every push to main
 ```
 
