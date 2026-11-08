@@ -62,7 +62,7 @@ After that, every push to `main` publishes the site.
 
 ## Design notes
 
-- Fonts: Archivo and JetBrains Mono, self-hosted (SIL Open Font License, see `assets/fonts/`).
+- Site fonts: Archivo and JetBrains Mono, self-hosted (SIL Open Font License, see `assets/fonts/`).
   No external requests, no cookies, no analytics.
 - Light and dark themes follow the visitor's system setting. Motion is limited to the hero waveform
   drawing in once, and is disabled when the visitor prefers reduced motion.

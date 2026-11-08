@@ -8,20 +8,25 @@
 % =====================================================================
 
 % ---------------------------------------------------------------- en-tête
-\newcommand{\BlkHeader}[1]{%
-  \cvheader{Junior Deogracias MAMBO MOTSOU}{#1}
-  {\href{mailto:motsoujunior17@gmail.com}{motsoujunior17@gmail.com}\sep
-   \phone\sep France\sep \availability}
-  {\href{https://teo1747.github.io/Portfolio/}{teo1747.github.io/Portfolio}\sep
-   \href{https://github.com/teo1747}{github.com/teo1747}\sep
-   \href{https://www.linkedin.com/in/teo1747}{linkedin.com/in/teo1747}}}
+% \BlkHeader{headline}{\focus{..}\focus{..}} — top of the sidebar
+\newcommand{\BlkHeader}[2]{%
+  \cvname{Junior Deogracias}{Mambo Motsou}
+  \cvtitle{#1}
+  \cvfocus{#2}
+  \section{Contact}
+  \cvcontact{\faPhone}{\phone}
+  \cvcontact{\faEnvelope}{\cvlink{mailto:motsoujunior17@gmail.com}{motsoujunior17@gmail.com}}
+  \cvcontact{\faGlobe}{\cvlink{https://teo1747.github.io/Portfolio/}{teo1747.github.io/Portfolio}}
+  \cvcontact{\faGithub}{\cvlink{https://github.com/teo1747}{github.com/teo1747}}
+  \cvcontact{\faLinkedin}{\cvlink{https://www.linkedin.com/in/teo1747}{linkedin.com/in/teo1747}}
+  \cvcontact{\faMapMarker*}{France}
+  \cvcontact{\faCalendar*}{\availability}}
 \newcommand{\phone}{+33 6 01 16 86 06}
 \newcommand{\availability}{Disponible immédiatement}
 
 % ---------------------------------------------------------------- profil
 \newcommand{\BlkProfile}{%
-\section{Profil}
-\FP{Ingénieur systèmes embarqués (Polytech Dijon, 2026) orienté conception numérique sur FPGA et SoC Zynq :
+\cvsummary{\FP{Ingénieur systèmes embarqués (Polytech Dijon, 2026) orienté conception numérique sur FPGA et SoC Zynq :
 RTL en VHDL, interfaces AXI4-Lite et AXI4-Stream, intégration d'IP et block design sous Vivado, et le
 logiciel bare-metal qui pilote le matériel depuis Vitis. Je vérifie le RTL contre des modèles C bit-exacts
 avec des bancs de test auto-vérifiants. Une année de mise en route firmware automobile chez FORVIA
@@ -34,53 +39,39 @@ ou logiciel et je valide sur banc ; la conception VHDL/FPGA complète ce profil.
 temps réel et outillage associé. Chez FORVIA, j'ai développé et débogué du firmware pour
 microcontrôleurs automobiles ainsi qu'une chaîne de pilotage multithread Python/Kotlin pour un démonstrateur
 d'éclairage. Dans mes projets personnels, je développe un RTOS, un OS x86-64 et une chaîne de compilation C,
-avec un soin particulier pour le build, la CI et les tests.}}\par}
+avec un soin particulier pour le build, la CI et les tests.}}}}
 
 % ---------------------------------------------------------------- compétences
 \newcommand{\BlkSkillsHW}{%
 \section{Compétences techniques}
-\cvskill{Microcontrôleurs}{STM32 (F446RE, G474RE), Infineon TLD4020 (Cortex-M23), Melexis MLX81116/MLX81143,
-  RP2040 (PIO), PIC32MZ, PIC24, ATmega328P}
-\cvskill{Firmware}{C (bare-metal, registres via CMSIS, HAL/SDK), FreeRTOS, Zephyr, interruptions et timers,
-  acquisition ADC, PWM, machines d'états}
-\cvskill{Bus \& protocoles}{LIN, MeLiBu, UART, SPI, I²C, AXI4-Stream, Bluetooth série, ISO 14443-A (MIFARE)}
-\cvskill{FPGA \& VHDL}{VHDL (machines d'états, chemins de données pipelinés, IOBUF bidirectionnel),
-  Vivado (synthèse, implémentation, IP integrator, ILA), Vitis HLS, XSim ; Artix-7, Zynq-7000}
-\cvskill{Électronique}{Schéma et routage PCB (KiCad, Proteus), interfaçage capteurs (CTN, capteurs I²C/SPI),
-  mise en route de cartes d'évaluation}
-\cvskill{Debug \& outils}{J-Link, ST-LINK, débogueur PICkit embarqué, GDB, consoles série ; IAR EWARM,
-  MPLAB X + Harmony v3/MCC, STM32CubeProgrammer, Pico SDK ; Git, CMake, Ninja, West}
-\cvskill{Logiciel}{Python (PyQt5, OpenCV, threading), C++/Qt, Kotlin (Android, Jetpack Compose)}\par}
+\cvskill{Microcontrôleurs}{\chip[(F446RE, G474RE)]{STM32}\chip[(Cortex-M23)]{Infineon TLD4020}\chip{Melexis MLX81116/MLX81143}\chip[(PIO)]{RP2040}\chip{PIC32MZ}\chip{PIC24}\chip{ATmega328P}}
+\cvskill{Firmware}{\chip[(bare-metal, registres via CMSIS, HAL/SDK)]{C}\chip{FreeRTOS}\chip{Zephyr}\chip{interruptions et timers}\chip{acquisition ADC}\chip{PWM}\chip{machines d'états}}
+\cvskill{Bus \& protocoles}{\chip{LIN}\chip{MeLiBu}\chip{UART}\chip{SPI}\chip{I²C}\chip{AXI4-Stream}\chip{Bluetooth série}\chip[(MIFARE)]{ISO 14443-A}}
+\cvskill{FPGA \& VHDL}{\chip[(machines d'états, chemins de données pipelinés, IOBUF bidirectionnel)]{VHDL}\chip[(synthèse, implémentation, IP integrator, ILA)]{Vivado}\chip{Vitis HLS}\chip{XSim}\chip{Artix-7}\chip{Zynq-7000}}
+\cvskill{Électronique}{\chip[(KiCad, Proteus)]{Schéma et routage PCB}\chip[(CTN, capteurs I²C/SPI)]{interfaçage capteurs}\chip{mise en route de cartes d'évaluation}}
+\cvskill{Debug \& outils}{\chip{J-Link}\chip{ST-LINK}\chip{débogueur PICkit embarqué}\chip{GDB}\chip{consoles série}\chip{IAR EWARM}\chip{MPLAB X + Harmony v3/MCC}\chip{STM32CubeProgrammer}\chip{Pico SDK}\chip{Git}\chip{CMake}\chip{Ninja}\chip{West}}
+\cvskill{Logiciel}{\chip[(PyQt5, OpenCV, threading)]{Python}\chip{C++/Qt}\chip[(Android, Jetpack Compose)]{Kotlin}}\par}
 
 \newcommand{\BlkSkillsSW}{%
 \section{Compétences techniques}
-\cvskill{Langages}{C (C99/C11), Python, C++ (Qt), Kotlin ; assembleur : x86-64 (NASM), Arm Thumb, RISC-V}
-\cvskill{RTOS \& OS}{FreeRTOS (tâches, queues, mutex, event groups, stream buffers), Zephyr (devicetree,
-  Kconfig), bare-metal ; noyau : ordonnancement, commutation de contexte, pagination, interruptions, syscalls}
-\cvskill{Linux}{Ubuntu au quotidien ; drivers en espace utilisateur (spidev, i2c-dev, GPIO sysfs) sur Raspberry Pi}
-\cvskill{Build \& toolchains}{GCC (arm-none-eabi, cross x86\_64-elf), Clang, scripts d'édition de liens,
-  CMake, Ninja, GNU Make, West, Kconfig ; IAR EWARM, MPLAB X (XC16/XC32)}
-\cvskill{Debug \& tests}{GDB (distant, QEMU), J-Link, QEMU ; tests unitaires sous ASan/UBSan, tests de
-  conformité et tests différentiels contre des modèles de référence}
-\cvskill{Automatisation}{Git (workflow par pull requests), CI GitHub Actions, outillage Python}
-\cvskill{Interfaces}{UART, SPI, I²C, LIN, MeLiBu, Bluetooth série avec protocole JSON, clients REST/HTTP}
-\cvskill{Applications}{Python multithread (PyQt5, OpenCV), Qt/C++, Android (Kotlin, Jetpack Compose)}\par}
+\cvskill{Langages}{\chip[(C99/C11)]{C}\chip{Python}\chip[(Qt)]{C++}\chip{Kotlin}\chip[(NASM)]{assembleur : x86-64}\chip{Arm Thumb}\chip{RISC-V}}
+\cvskill{RTOS \& OS}{\chip[(tâches, queues, mutex, event groups, stream buffers)]{FreeRTOS}\chip[(devicetree, Kconfig)]{Zephyr}\chip{bare-metal}\chip{noyau : ordonnancement}\chip{commutation de contexte}\chip{pagination}\chip{interruptions}\chip{syscalls}}
+\cvskill{Linux}{\chip{Ubuntu au quotidien}\chip{drivers en espace utilisateur (spidev, i2c-dev, GPIO sysfs) sur Raspberry Pi}}
+\cvskill{Build \& toolchains}{\chip[(arm-none-eabi, cross x86\_64-elf)]{GCC}\chip{Clang}\chip{scripts d'édition de liens}\chip{CMake}\chip{Ninja}\chip{GNU Make}\chip{West}\chip{Kconfig}\chip{IAR EWARM}\chip[(XC16/XC32)]{MPLAB X}}
+\cvskill{Debug \& tests}{\chip[(distant, QEMU)]{GDB}\chip{J-Link}\chip{QEMU}\chip{tests unitaires sous ASan/UBSan}\chip{tests de conformité et tests différentiels contre des modèles de référence}}
+\cvskill{Automatisation}{\chip[(workflow par pull requests)]{Git}\chip{CI GitHub Actions}\chip{outillage Python}}
+\cvskill{Interfaces}{\chip{UART}\chip{SPI}\chip{I²C}\chip{LIN}\chip{MeLiBu}\chip{Bluetooth série avec protocole JSON}\chip{clients REST/HTTP}}
+\cvskill{Applications}{\chip[(PyQt5, OpenCV)]{Python multithread}\chip{Qt/C++}\chip[(Kotlin, Jetpack Compose)]{Android}}\par}
 
 \newcommand{\BlkSkillsFPGA}{%
 \section{Compétences techniques}
-\cvskill{HDL \& conception}{VHDL (RTL synthétisable, bancs de test VHDL-2008), Verilog (bases) ; machines
-  d'états, chemins de données pipelinés, line buffers, gestion de la croissance en bits, handshakes AXI avec
-  back-pressure, E/S bidirectionnelles}
-\cvskill{Flot AMD/Xilinx}{Vivado : block design sous IP integrator, packaging d'IP, synthèse, implémentation,
-  XDC, rapports de timing et d'utilisation, bitstream, ILA et Hardware Manager ; Vitis HLS ; applications
-  bare-metal Vitis ; scripts TCL du flot}
-\cvskill{Composants \& cartes}{Zynq-7000 (ZedBoard, xc7z020), Artix-7 (Nexys 4 DDR, xc7a100t)}
-\cvskill{Interfaces \& IP}{AXI4-Lite, AXI4-Stream, AXI DMA, PS7 Zynq (ports GP/HP), Video Timing Controller,
-  Clocking Wizard, FIFO Generator ; VGA, I²C, UART, SPI, SRAM ZBT}
-\cvskill{Vérification}{Bancs de test auto-vérifiants, modèles C de référence bit-exacts, injection de
-  blocages aléatoires ; GHDL, XSim, ModelSim ; simulation en CI sur GitHub Actions}
-\cvskill{Logiciel embarqué}{C (bare-metal, drivers standalone Xilinx, CMSIS), FreeRTOS, Zephyr ; Python, TCL}
-\cvskill{Debug}{ILA, JTAG / Hardware Manager, J-Link, GDB, consoles série}\par}
+\cvskill{HDL \& conception}{\chip[(RTL synthétisable, bancs de test VHDL-2008)]{VHDL}\chip[(bases)]{Verilog}\chip{machines d'états}\chip{chemins de données pipelinés}\chip{line buffers}\chip{gestion de la croissance en bits}\chip{handshakes AXI avec back-pressure}\chip{E/S bidirectionnelles}}
+\cvskill{Flot AMD/Xilinx}{\chip{Vivado : block design sous IP integrator}\chip{packaging d'IP}\chip{synthèse}\chip{implémentation}\chip{XDC}\chip{rapports de timing et d'utilisation}\chip{bitstream}\chip{ILA et Hardware Manager}\chip{Vitis HLS}\chip{applications bare-metal Vitis}\chip{scripts TCL du flot}}
+\cvskill{Composants \& cartes}{\chip[(ZedBoard, xc7z020)]{Zynq-7000}\chip[(Nexys 4 DDR, xc7a100t)]{Artix-7}}
+\cvskill{Interfaces \& IP}{\chip{AXI4-Lite}\chip{AXI4-Stream}\chip{AXI DMA}\chip[(ports GP/HP)]{PS7 Zynq}\chip{Video Timing Controller}\chip{Clocking Wizard}\chip{FIFO Generator}\chip{VGA}\chip{I²C}\chip{UART}\chip{SPI}\chip{SRAM ZBT}}
+\cvskill{Vérification}{\chip{Bancs de test auto-vérifiants}\chip{modèles C de référence bit-exacts}\chip{injection de blocages aléatoires}\chip{GHDL}\chip{XSim}\chip{ModelSim}\chip{simulation en CI sur GitHub Actions}}
+\cvskill{Logiciel embarqué}{\chip[(bare-metal, drivers standalone Xilinx, CMSIS)]{C}\chip{FreeRTOS}\chip{Zephyr}\chip{Python}\chip{TCL}}
+\cvskill{Debug}{\chip{ILA}\chip{JTAG / Hardware Manager}\chip{J-Link}\chip{GDB}\chip{consoles série}}\par}
 
 % ---------------------------------------------------------------- FORVIA
 \newcommand{\BlkForvia}{%
@@ -100,7 +91,7 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
   \item Responsable logiciel d'un démonstrateur d'éclairage intérieur : Python multithread pilotant neuf
     gateways UART STM32 synchronisées à 921\,600 bauds, pilotage par tablette Android en Bluetooth.
 \end{itemize}
-\cvenv{Environnement\,:}{IAR EWARM, J-Link, Pico SDK, Python/PyQt5, Kotlin, STM32, LIN, MeLiBu, UART}}
+\cvenv{Environnement\,:}{\chip{IAR EWARM}\chip{J-Link}\chip{Pico SDK}\chip{Python/PyQt5}\chip{Kotlin}\chip{STM32}\chip{LIN}\chip{MeLiBu}\chip{UART}}}
 \newcommand{\forviadates}{sept.\ 2025 -- sept.\ 2026}
 
 \newcommand{\BlkForviaTCU}{%
@@ -116,22 +107,21 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
     signal carré à 100\,Hz pendant la PWM : échantillonnage synchronisé sur le temps haut (ISR à
     mi-impulsion, moyenne sur 16 mesures), qui a ramené la dispersion dans les limites du besoin de régulation.
 \end{itemize}
-\cvenv{Environnement\,:}{carte TLD4020-3STD\_EVAL, IAR Embedded Workbench, Infineon MCU Configuration Wizard,
-  J-Link embarqué, printf sur LIN (MobaXterm, 19\,200 bauds 8N1)}}
+\cvenv{Environnement\,:}{\chip{carte TLD4020-3STD\_EVAL}\chip{IAR Embedded Workbench}\chip{Infineon MCU Configuration Wizard}\chip{J-Link embarqué}\chip[(MobaXterm, 19\,200 bauds 8N1)]{printf sur LIN}}}
 
 \newcommand{\BlkForviaMeli}{%
 \cvsub{Portage du driver LED MeLiBu : Melexis MLX81116 vers MLX81143}
 \begin{itemize}
   \item Portage d'un driver MeLiBu~1.x existant sur RP2040 vers le MLX81143 : encodage de sous-adresse en
     mode étendu (14 LED par nœud), encodage PWM linéaire 15 bits vérifié sur datasheet et sur matériel ;
-    panneau 22 × 7 (154 LED RVB).
+    panneau 22\,×\,7 (154 LED RVB).
   \item Correction des défauts de timing bus : génération du break en attente active sous interruptions
     masquées, section critique réduite au seul break pour ne plus perdre d'octets en réception UART,
     vidage de la FIFO TX avant chaque trame pour éviter les collisions ; correction de la broche de retour bus.
   \HW{\item Correction du câblage désordonné des LED dans la couche de mapping matériel, séparée de la
     convention d'entrée ; récepteur PIO utilisé pour confirmer les acquittements des esclaves.}
 \end{itemize}
-\cvenv{Environnement\,:}{RP2040, Raspberry Pi Pico SDK, machines d'états PIO, C, MeLiBu~1.x}}
+\cvenv{Environnement\,:}{\chip{RP2040}\chip{Raspberry Pi Pico SDK}\chip{machines d'états PIO}\chip{C}\chip{MeLiBu~1.x}}}
 
 \newcommand{\BlkForviaLight}{%
 \cvsub{Démonstrateur d'éclairage d'ambiance intérieur (responsable logiciel)}
@@ -145,7 +135,7 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
     luminosité en Bluetooth série, via un protocole de commandes JSON avec codes d'erreur ; mode de secours au clavier.
   \item Adaptation minimale du firmware des gateways STM32 (filtrage par décalage d'ID si deux gateways partagent une UART).
 \end{itemize}
-\cvenv{Environnement\,:}{Python 3, PyQt5, OpenCV, Kotlin/Jetpack Compose, STM32 (C), WS2812, UART, Bluetooth SPP, Git}}
+\cvenv{Environnement\,:}{\chip{Python 3}\chip{PyQt5}\chip{OpenCV}\chip{Kotlin/Jetpack Compose}\chip[(C)]{STM32}\chip{WS2812}\chip{UART}\chip{Bluetooth SPP}\chip{Git}}}
 
 % ---------------------------------------------------------------- KMUTT
 \newcommand{\BlkKmutt}{%
@@ -158,7 +148,7 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
     fetch--decode--execute à 12 états, ALU avec drapeaux NZVC, ROM/RAM/E-S mappées en mémoire) d'après
     l'architecture de référence de LaMeres ; simulé sous Vivado 2024.2 / XSim.}
 \end{itemize}
-\cvenv{Environnement\,:}{Python, TensorFlow/Keras, OpenCV\HW{, VHDL, Vivado 2024.2}}}
+\cvenv{Environnement\,:}{\chip{Python}\chip{TensorFlow/Keras}\chip{OpenCV}\HW{\chip{VHDL}\chip{Vivado 2024.2}}}}
 
 % ---------------------------------------------------------------- projets académiques
 \newcommand{\BlkAcadTherm}{%
@@ -168,7 +158,7 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
     V2 (binôme) : chaîne FreeRTOS de tâches acquisition, analyse et affichage sur PIC32MZ2048EFH100, reliée par
     des queues et des sémaphores binaires ; messages horodatés ; bascule °C/°F par bouton.
 \end{itemize}
-\cvenv{Environnement\,:}{Explorer 16/32, MPLAB X, XC16/XC32, Harmony v3/MCC, FreeRTOS 10.5, capteur TC1047A, débogueur embarqué}}
+\cvenv{Environnement\,:}{\chip{Explorer 16/32}\chip{MPLAB X}\chip{XC16/XC32}\chip{Harmony v3/MCC}\chip{FreeRTOS 10.5}\chip{capteur TC1047A}\chip{débogueur embarqué}}}
 
 \newcommand{\BlkAcadZephyr}{%
 \cvproject{Étude de faisabilité Zephyr RTOS sur STM32}{TP Polytech}{2025 -- 2026}{github.com/teo1747/zephyr-stm32-sensor-hub}
@@ -177,26 +167,26 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
     6 axes) et OLED SSD1306 via l'API display et CFB ; données partagées protégées par mutex ; carte
     décrite en overlay devicetree (dépôt reconstruit d'après le rapport).
 \end{itemize}
-\cvenv{Environnement\,:}{NUCLEO-G474RE, Zephyr, West, CMake, Ninja, STM32CubeProgrammer, console série}}
+\cvenv{Environnement\,:}{\chip{NUCLEO-G474RE}\chip{Zephyr}\chip{West}\chip{CMake}\chip{Ninja}\chip{STM32CubeProgrammer}\chip{console série}}}
 
 \newcommand{\BlkAcadSram}{%
 \cvproject{Contrôleur de SRAM ZBT en VHDL}{cours SoC Polytech, binôme}{2025 -- 2026}{github.com/teo1747/vhdl-zbt-sram-controller}
 \begin{itemize}
-  \item Contrôleur à machine d'états pour une SRAM ZBT Micron 512K × 36 : lectures/écritures simples
+  \item Contrôleur à machine d'états pour une SRAM ZBT Micron 512K\,×\,36 : lectures/écritures simples
     et en rafale de 4 mots sur un bus bidirectionnel de 36 bits (IOBUF Xilinx) ; banc de test
     auto-vérifiant contre le modèle Micron.
 \end{itemize}
-\cvenv{Environnement\,:}{VHDL, Vivado, cible Zynq-7000, modèle de simulation Micron}}
+\cvenv{Environnement\,:}{\chip{VHDL}\chip{Vivado}\chip{cible Zynq-7000}\chip{modèle de simulation Micron}}}
 
 \newcommand{\BlkAcadVideo}{%
 \cvproject{Chaîne vidéo VGA temps réel sur ZedBoard}{Polytech, binôme}{2025 -- 2026}{github.com/teo1747/zedboard-vga-video-pipeline}
 \begin{itemize}
-  \item Chaîne 640 × 480 assemblée sous IP integrator : Clocking Wizard, Video Timing Controller, IP vidéo
+  \item Chaîne 640\,×\,480 assemblée sous IP integrator : Clocking Wizard, Video Timing Controller, IP vidéo
     AXI4-Stream, inverseur VHDL et IP d'incrustation Vitis HLS. Synchros vérifiées sur carte à l'ILA ;
     la démo finale n'affichait pas d'image faute de maître AXI-Lite pour démarrer les IP HLS, depuis
     rendues autonomes (nouveau test sur carte à faire).
 \end{itemize}
-\cvenv{Environnement\,:}{Zynq-7000 (xc7z020), Vivado/Vitis HLS 2022.2, ILA, contraintes XDC}}
+\cvenv{Environnement\,:}{\chip[(xc7z020)]{Zynq-7000}\chip{Vivado/Vitis HLS 2022.2}\chip{ILA}\chip{contraintes XDC}}}
 
 \newcommand{\BlkAcadFilter}{%
 \cvproject{Filtre d'image 3×3 sur FPGA}{Polytech, seul}{nov.\ 2024 -- janv.\ 2025}{github.com/teo1747/vhdl-2d-image-filter}
@@ -205,7 +195,7 @@ avec un soin particulier pour le build, la CI et les tests.}}\par}
     l'IP FIFO Generator, arbre d'additionneurs pipeliné avec croissance en bits explicite
     (9, 10 puis 11 bits) ; simulation complète sur l'image Lena, sorties comparées à une référence logicielle.
 \end{itemize}
-\cvenv{Environnement\,:}{VHDL, Vivado 2024.1, Artix-7 (xc7a100t), XSim, MATLAB}}
+\cvenv{Environnement\,:}{\chip{VHDL}\chip{Vivado 2024.1}\chip[(xc7a100t)]{Artix-7}\chip{XSim}\chip{MATLAB}}}
 
 \newcommand{\BlkAcadTemp}{%
 \cvproject{Moniteur de température sur FPGA}{Polytech, binôme}{2024 -- 2025}{github.com/teo1747/nexys4ddr-temperature-monitor}
@@ -281,7 +271,7 @@ pas encore sur cartes physiques.}\par}}
     event groups et stream buffers ; PIN hachés SHA-256 salés et étirés ; journal protégé par CRC.
   \item Tests unitaires hôte avec sanitizers et scénarios système sous EmbSIM ; pas encore testé sur carte physique.
 \end{itemize}
-\cvenv{Environnement\,:}{NUCLEO-F446RE, FreeRTOS 11, CMSIS, arm-none-eabi-gcc, CMake, Ninja}}
+\cvenv{Environnement\,:}{\chip{NUCLEO-F446RE}\chip{FreeRTOS 11}\chip{CMSIS}\chip{arm-none-eabi-gcc}\chip{CMake}\chip{Ninja}}}
 
 \newcommand{\BlkAccel}{%
 \cvproject{Accélérateur de filtrage d'image pour Zynq-7000 avec DMA AXI}{personnel}{oct.\ 2026}{github.com/teo1747/zynq-image-filter-accelerator}
@@ -295,18 +285,22 @@ pas encore sur cartes physiques.}\par}}
   \item Bit-exact face à une référence C dans un banc de test GHDL auto-vérifiant avec blocages aléatoires
     sur les deux flux (14 images, exécuté en CI). Essai sur ZedBoard à venir.
 \end{itemize}
-\cvenv{Environnement\,:}{VHDL, C, TCL, Vivado, Vitis, GHDL, Zynq-7000 (xc7z020)}}
+\cvenv{Environnement\,:}{\chip{VHDL}\chip{C}\chip{TCL}\chip{Vivado}\chip{Vitis}\chip{GHDL}\chip[(xc7z020)]{Zynq-7000}}}
 
 % ---------------------------------------------------------------- formation & langues
 \newcommand{\BlkEducation}{%
-\section{Formation \& langues}
+\cvsection{\faGraduationCap}{Formation}
 \cvedu{Diplôme d'ingénieur (Bac+5) --- Systèmes embarqués}{Polytech Dijon}{Dijon}{2023 -- sept.\ 2026}
 {\color{muted}Diplômé. Dernière année en alternance chez FORVIA. \FP{Enseignements : conception numérique, SoC sur Zynq (Vivado, Vitis, Vitis HLS), temps réel.}\NF{Enseignements : électronique, PCB, temps réel, SoC/FPGA.}\par}
-\cvedu{Classes préparatoires (2 ans) --- mathématiques, physique, électronique}{IUC}{\iucplace}{\iucdates}
-\vspace{4pt}
-\cvskill{Langues}{Anglais : langue maternelle (anglophone), TOEIC C1 (2024)\sep Français : courant (B2)}
-\cvskill{Certification}{Cisco CCNA 1 (juillet 2024)}}
+\cvedu{Classes préparatoires (2 ans) --- mathématiques, physique, électronique}{IUC}{\iucplace}{\iucdates}}
 \newcommand{\iucplace}{Cameroun}
 \newcommand{\iucdates}{2021 -- 2023}
 
-\newcommand{\BlkLanguages}{} % intégré à \BlkEducation
+% sidebar: languages and certification
+\newcommand{\BlkLanguages}{%
+\section{Langues}
+\cvlang{Anglais}{5}{langue maternelle (anglophone), TOEIC C1 (2024)}
+\cvlang{Français}{4.5}{courant (B2)}}
+\newcommand{\BlkCert}{%
+\section{Certification}
+\cvcert{Cisco CCNA 1 (juillet 2024)}}

@@ -10,15 +10,22 @@
 \input{en/blocks}
 
 \begin{document}
-\BlkHeader{Embedded Software Engineer}
-\BlkProfile
+\begin{cvbody}
+% ---------------- sidebar
+\BlkHeader{Embedded Software Engineer}{\focus{C firmware}\focus{RTOS \& OS}\focus{Build \& toolchains}\focus{Debug \& test}}
+\BlkLanguages
 \BlkSkillsSW
+\BlkCert
 
-\section{Professional experience}
+\mainpart
+% ---------------- main column
+\BlkProfile
+
+\cvsection{\faBuilding}{Professional experience}
 \BlkForvia
 \BlkKmutt
 
-\section{Personal \& academic projects}
+\cvsection{\faCode}{Personal \& academic projects}
 \cvgroup{Personal}
 \BlkPersonalNote
 \BlkRtos
@@ -31,5 +38,5 @@
 \BlkAcadRpi
 
 \BlkEducation
-\BlkLanguages
+\end{cvbody}
 \end{document}

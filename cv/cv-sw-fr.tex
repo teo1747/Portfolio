@@ -12,15 +12,22 @@
 \input{fr/blocks}
 
 \begin{document}
-\BlkHeader{Ingénieur logiciel embarqué}
-\BlkProfile
+\begin{cvbody}
+% ---------------- sidebar
+\BlkHeader{Ingénieur logiciel embarqué}{\focus{Firmware C}\focus{RTOS \& OS}\focus{Build \& toolchains}\focus{Debug \& tests}}
+\BlkLanguages
 \BlkSkillsSW
+\BlkCert
 
-\section{Expérience professionnelle}
+\mainpart
+% ---------------- main column
+\BlkProfile
+
+\cvsection{\faBuilding}{Expérience professionnelle}
 \BlkForvia
 \BlkKmutt
 
-\section{Projets personnels et académiques}
+\cvsection{\faCode}{Projets personnels et académiques}
 \cvgroup{Personnels}
 \BlkPersonalNote
 \BlkRtos
@@ -33,5 +40,5 @@
 \BlkAcadRpi
 
 \BlkEducation
-\BlkLanguages
+\end{cvbody}
 \end{document}

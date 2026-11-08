@@ -12,15 +12,22 @@
 \input{fr/blocks}
 
 \begin{document}
-\BlkHeader{Ingénieur logiciel et matériel embarqué}
-\BlkProfile
+\begin{cvbody}
+% ---------------- sidebar
+\BlkHeader{Ingénieur logiciel et matériel embarqué}{\focus{Firmware}\focus{Microcontrôleurs}\focus{FPGA \& VHDL}\focus{Électronique}}
+\BlkLanguages
 \BlkSkillsHW
+\BlkCert
 
-\section{Expérience professionnelle}
+\mainpart
+% ---------------- main column
+\BlkProfile
+
+\cvsection{\faBuilding}{Expérience professionnelle}
 \BlkForvia
 \BlkKmutt
 
-\section{Projets académiques et personnels}
+\cvsection{\faCode}{Projets académiques et personnels}
 \cvgroup{Polytech Dijon}
 \BlkAcadTherm
 \BlkAcadSram
@@ -32,5 +39,5 @@
 \BlkAccess
 
 \BlkEducation
-\BlkLanguages
+\end{cvbody}
 \end{document}

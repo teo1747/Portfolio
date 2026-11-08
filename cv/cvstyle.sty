@@ -1,126 +1,186 @@
 % =====================================================================
 %  cvstyle.sty — shared layout for all CV variants
 %  Engine: XeLaTeX (Overleaf: Menu > Compiler > XeLaTeX; latexmkrc sets it)
-%  Single-column, real text, no icons-as-text: ATS-friendly.
-%  Typeface: Archivo (SIL OFL), bundled in ./fonts — same family as the website.
+%  Two columns: a tinted sidebar (name, contact, languages, skills,
+%  certification) and a main column (summary, experience, projects,
+%  education) with a date column on the left.
+%  Typeface: Latin Modern Roman (fontspec default, optical sizes), icons
+%  from fontawesome5. Both ship with TeX Live and Overleaf.
 % =====================================================================
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cvstyle}[2026/10/28 CV layout]
+\ProvidesPackage{cvstyle}[2026/11/08 CV layout, sidebar]
 
 % ---------- Page ----------
-\RequirePackage[a4paper,top=10mm,bottom=12mm,left=14mm,right=14mm,footskip=6mm]{geometry}
+\RequirePackage[a4paper,top=7mm,bottom=10mm,left=3.9mm,right=9mm,footskip=5mm]{geometry}
 \RequirePackage{xcolor}
-\RequirePackage{fontspec}
+\RequirePackage{fontspec}          % Latin Modern Roman with optical sizes
+\RequirePackage{fontawesome5}
 \RequirePackage{enumitem}
 \RequirePackage{titlesec}
-\RequirePackage{ragged2e}
+\RequirePackage{paracol}
+\RequirePackage{eso-pic}
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
 \RequirePackage{needspace}
 \RequirePackage[hidelinks,unicode]{hyperref}
 
-% ---------- Fonts ----------
-% -calt keeps every glyph mapped to Unicode: clean copy/paste and ATS parsing.
-\setmainfont{Archivo}[
-  Path           = ./fonts/,
-  Extension      = .ttf,
-  UprightFont    = *-Regular,
-  ItalicFont     = *-Italic,
-  BoldFont       = *-SemiBold,
-  BoldItalicFont = *-SemiBoldItalic,
-  Numbers        = {Lining},
-  RawFeature     = {-calt},
-]
-\newfontfamily\mediumfont{Archivo}[Path=./fonts/, Extension=.ttf,
-  UprightFont=*-Medium, BoldFont=*-SemiBold, ItalicFont=*-Italic, RawFeature={-calt}, Ligatures=TeX]
-\newfontfamily\headfont{ArchivoSemiCondensed}[Path=./fonts/, Extension=.ttf,
-  UprightFont=*-SemiBold, BoldFont=*-SemiBold, ItalicFont=*-SemiBold, RawFeature={-calt}, Ligatures=TeX]
-\newfontfamily\namefont{ArchivoCondensed}[Path=./fonts/, Extension=.ttf,
-  UprightFont=*-Bold, BoldFont=*-Bold, ItalicFont=*-Bold, RawFeature={-calt}, Ligatures=TeX]
-
 % ---------- Colours ----------
-\definecolor{ink}{HTML}{16201F}      % body text
-\definecolor{accent}{HTML}{0B5C6B}   % deep teal: headings, links, markers
-\definecolor{amber}{HTML}{B7791F}    % single highlight colour (header rule)
-\definecolor{muted}{HTML}{56625F}    % dates, environment lines
-\definecolor{rule}{HTML}{CCD5D3}
+\definecolor{ink}{HTML}{1A202C}       % body text
+\definecolor{cvblue}{HTML}{1A56A0}    % name, headings, titles, chips
+\definecolor{chipbg}{HTML}{DBEAFE}    % chip background
+\definecolor{sidebg}{HTML}{F0F4F8}    % sidebar background
+\definecolor{cvrule}{HTML}{90CDF4}    % rules under headings
+\definecolor{muted}{HTML}{718096}     % dates, descriptions, summary
+\definecolor{second}{HTML}{2D3748}    % secondary dark text
 \color{ink}
 
 % ---------- Base typography ----------
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 \setlength{\emergencystretch}{2em}
-\tolerance=1500
-\AtBeginDocument{\fontsize{9.1pt}{11.45pt}\selectfont\RaggedRight}
+\tolerance=2000
+% ragged right that leaves \leftskip alone (the date column relies on it)
+\newcommand{\cvragged}{\rightskip=0pt plus 3em\relax\parfillskip=0pt plus 1fil\relax}
+\AtBeginDocument{\fontsize{8.4pt}{10.1pt}\selectfont\cvragged}
+
+% ---------- Sidebar background on every page ----------
+\newlength{\sidebarwidth}\setlength{\sidebarwidth}{64.1mm}
+\AddToShipoutPictureBG{\AtPageLowerLeft{\color{sidebg}\rule{\sidebarwidth}{\paperheight}}}
+
+% ---------- Columns ----------
+\columnratio{0.3001}               % sidebar 56.6 mm, main 132 mm
+\setlength{\columnsep}{7.5mm}
+\newenvironment{cvbody}{\begin{paracol}{2}}{\end{paracol}}
+\newcommand{\mainpart}{\switchcolumn}
+
+% ---------- Footer ----------
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
-\fancyfoot[R]{\fontsize{7.5pt}{9pt}\selectfont\color{muted}\cvfootername\enspace\thepage/\pageref{LastPage}}
+\fancyfoot[R]{\fontsize{7pt}{8pt}\selectfont\color{muted}\cvfootername\enspace\thepage/\pageref{LastPage}}
 \newcommand{\cvfootername}{}
 
-% ---------- Sections: sentence case, accent marker, hairline to the margin ----------
-\newcommand{\sectionfill}[1]{%
-  {\color{accent}\rule[0.08em]{0.55em}{0.55em}}\hspace{0.45em}#1\hspace{0.6em}%
-  {\color{rule}\leaders\hbox{\rule[0.3em]{1pt}{0.6pt}}\hfill}\kern0pt}
-\titleformat{\section}
-  {\headfont\fontsize{12pt}{14pt}\selectfont\color{accent}}
-  {}{0pt}{\sectionfill}
-\titlespacing*{\section}{0pt}{6pt}{3pt}
-
 % ---------- Lists ----------
-\setlist[itemize]{before=\RaggedRight,leftmargin=10pt,labelsep=4.5pt,topsep=1.5pt,itemsep=0.4pt,
-  parsep=0pt,partopsep=0pt,label={\color{accent}\raisebox{0.42ex}{\rule{2.6pt}{2.6pt}}}}
+\newlength{\datecol}\setlength{\datecol}{25.4mm}
+% lists only occur inside main-column entries: indent them past the date column
+\setlist[itemize]{before={\leftskip=0pt},first=\cvragged,leftmargin=\dimexpr\datecol+8.5pt\relax,labelsep=3.5pt,topsep=1.5pt,itemsep=0.3pt,
+  parsep=0pt,partopsep=0pt,label={\color{ink}\textbullet}}
 
-% ---------- Header ----------
-% \cvheader{Name}{Headline}{contact line 1}{contact line 2}
-\newcommand{\cvheader}[4]{%
-  {\color{amber}\rule{2.2cm}{2.2pt}}\par\vspace{5pt}
-  {\namefont\fontsize{27pt}{29pt}\selectfont #1\par}
-  \vspace{3pt}
-  {\headfont\fontsize{12.5pt}{15pt}\selectfont\color{accent}#2\par}
-  \vspace{5pt}
-  {\fontsize{8.7pt}{11.6pt}\selectfont\color{ink}#3\par #4\par}
-  \vspace{1pt}
-}
-\newcommand{\sep}{\enspace{\color{rule}|}\enspace}
+% ---------- Chips ----------
+% \chip{text} or \chip[(detail)]{text}: detail is set in regular weight.
+% A chip wider than the line wraps inside its own box.
+\newsavebox{\cv@chipbox}
+\newlength{\cv@chipmax}
+\newcommand{\cv@chipfont}{\bfseries\fontsize{7.9pt}{9.2pt}\selectfont\color{cvblue}}
+\newcommand{\cv@chipcontent}[2]{\cv@chipfont #2\if\relax\detokenize{#1}\relax\else\ {\mdseries #1}\fi}
+\newcommand{\chip}[2][]{%
+  \sbox{\cv@chipbox}{\cv@chipcontent{#1}{#2}}%
+  \setlength{\cv@chipmax}{\dimexpr\hsize-\leftskip-6pt\relax}%
+  {\fboxsep=1.6pt
+   \ifdim\wd\cv@chipbox>\cv@chipmax
+     \colorbox{chipbg}{\hspace{1.4pt}\parbox[t]{\dimexpr\cv@chipmax-2.8pt\relax}{%
+       \leavevmode\rightskip=0pt plus 2em\relax\cv@chipcontent{#1}{#2}\strut}\hspace{1.4pt}}%
+   \else
+     \colorbox{chipbg}{\hspace{1.4pt}\usebox{\cv@chipbox}\hspace{1.4pt}}%
+   \fi}%
+  \hskip 2.6pt plus 1.5pt\relax}
+% a row of chips
+\newcommand{\cvchips}[1]{\par{\cvragged\baselineskip=12.4pt\lineskiplimit=0.5pt\lineskip=2.4pt
+  \leavevmode#1\par}}
 
-% ---------- Experience entry ----------
+% =====================================================================
+%  Sidebar
+% =====================================================================
+% \cvname{first names}{family name}
+\newcommand{\cvname}[2]{%
+  {\centering\bfseries\fontsize{11.6pt}{13.6pt}\selectfont\color{cvblue}\MakeUppercase{#1}\\\MakeUppercase{#2}\par}
+  \vspace{4pt}}
+% \cvtitle{headline}
+\newcommand{\cvtitle}[1]{{\centering\bfseries\fontsize{8.6pt}{10.4pt}\selectfont\color{second}\MakeUppercase{#1}\par}\vspace{3pt}}
+% \cvfocus{\focus{..}\focus{..}} — centred chips, one per line
+\newcommand{\cvfocus}[1]{{\centering#1\par}\vspace{1pt}}
+\newcommand{\focus}[1]{{\fboxsep=1.8pt\colorbox{chipbg}{\hspace{2pt}\cv@chipfont\fontsize{8.4pt}{10pt}\selectfont #1\hspace{2pt}}}\\[2.2pt]}
+
+% Sidebar section heading (\section is used for sidebar headings only)
+\titleformat{\section}
+  {\bfseries\fontsize{8.9pt}{10.6pt}\selectfont\color{cvblue}}
+  {}{0pt}{\MakeUppercase}
+  [\vspace{1.5pt}{\color{cvrule}\titlerule[0.6pt]}]
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+
+% \cvcontact{icon}{text}
+\newcommand{\cvcontact}[2]{%
+  {\makebox[4.4mm][l]{\color{cvblue}\fontsize{8.6pt}{10pt}\selectfont #1}\color{second}#2\par}\vspace{1.6pt}}
+\newcommand{\cvlink}[2]{\href{#1}{\color{cvblue}#2}}
+
+% \cvlang{language}{level 0-5, halves allowed}{detail}
+\newcommand{\cv@dots}[1]{%
+  \foreach\cv@i in {1,...,5}{%
+    \ifdim\cv@i pt<\dimexpr#1pt+0.6pt\relax
+      \ifdim\cv@i pt>\dimexpr#1pt\relax{\color{cvrule}\faCircle}\else{\color{cvblue}\faCircle}\fi
+    \else{\color{cvrule!45}\faCircle}\fi\hspace{0.6pt}}}
+\RequirePackage{pgffor}
+\newcommand{\cvlang}[3]{%
+  {#1\hfill{\fontsize{7.6pt}{9pt}\selectfont\cv@dots{#2}}\par}
+  {\fontsize{7.6pt}{9.2pt}\selectfont\color{muted}#3\par}\vspace{3pt}}
+
+% \cvskill{group label}{\chip{..}\chip{..}...}
+\newcommand{\cvskill}[2]{%
+  {\bfseries\fontsize{7.9pt}{9.4pt}\selectfont\color{second}#1\par}\vspace{1.2pt}
+  \cvchips{#2}\vspace{2.6pt}}
+
+% \cvcert{text}
+\newcommand{\cvcert}[1]{{\makebox[4.4mm][l]{\color{cvblue}\faCertificate}\color{second}#1\par}\vspace{1.6pt}}
+
+% =====================================================================
+%  Main column
+% =====================================================================
+\newcommand{\cv@datefont}{\fontsize{7.9pt}{9.4pt}\selectfont\color{muted}}
+\newcommand{\cv@titlefont}{\bfseries\fontsize{8.5pt}{10.2pt}\selectfont\color{cvblue}}
+\newcommand{\cv@descfont}{\itshape\fontsize{8pt}{9.6pt}\selectfont\color{muted}}
+\newcommand{\cv@date}[1]{\noindent\llap{\hbox to\datecol{\raisebox{0pt}[0pt][0pt]{%
+  \parbox[t]{\dimexpr\datecol-3mm\relax}{\rightskip=0pt plus 1fil\relax\cv@datefont #1}}\hss}}}
+
+% Grey summary at the top of the main column (no heading)
+\newcommand{\cvsummary}[1]{{\leftskip=0pt\color{muted}\fontsize{8.4pt}{10.2pt}\selectfont #1\par}}
+
+% \cvsection{icon}{Title}
+\newcommand{\cvsection}[2]{%
+  \par\leftskip=0pt\Needspace{5\baselineskip}\vspace{7pt}
+  {\bfseries\fontsize{9.6pt}{11.4pt}\selectfont\color{cvblue}#1\hspace{4pt}#2\par}
+  \vspace{2pt}{\color{cvrule}\hrule height 0.8pt}\vspace{3pt}}
+
 % \cventry{Role}{Organisation}{Location}{Dates}
 \newcommand{\cventry}[4]{%
-  \Needspace{6\baselineskip}\vspace{3pt}
-  {\headfont\fontsize{10.4pt}{12.6pt}\selectfont #1}\hfill{\mediumfont\color{muted}\fontsize{8.6pt}{11pt}\selectfont #4}\par
-  {\mediumfont\color{accent}#2}{\color{muted}\enspace #3}\par
-  \vspace{1pt}
-}
+  \par\Needspace{6\baselineskip}\vspace{4pt}\leftskip=\datecol
+  \cv@date{#4}{\cv@titlefont #2 \,|\, #1\par}
+  {\cv@descfont #3\par}\vspace{1pt}}
 
-% ---------- Project entry ----------
 % \cvproject{Title}{Context label}{Dates}{repo or empty}
 \newcommand{\cvproject}[4]{%
-  \Needspace{5\baselineskip}\vspace{4pt}
-  {\headfont\fontsize{9.9pt}{12pt}\selectfont #1}{\color{muted}\enspace #2}\hfill{\mediumfont\color{muted}\fontsize{8.6pt}{11pt}\selectfont #3}\par
-  \ifx&#4&\else{\fontsize{8.3pt}{10.4pt}\selectfont\color{accent}\href{https://#4}{#4}\par}\fi
-  \vspace{0.5pt}
-}
+  \par\Needspace{5\baselineskip}\vspace{4.5pt}\leftskip=\datecol
+  \cv@date{#3}{\cv@titlefont #1\par}
+  {\cv@descfont #2\ifx&#4&\else\enspace·\enspace\href{https://#4}{\color{cvblue}#4}\fi\par}
+  \vspace{0.5pt}}
 
 % Sub-heading inside an experience entry (one per project)
-\newcommand{\cvsub}[1]{\Needspace{4\baselineskip}\vspace{3pt}{\mediumfont\color{ink}#1}\par}
+\newcommand{\cvsub}[1]{\par\Needspace{4\baselineskip}\vspace{3.5pt}
+  {\bfseries\fontsize{8.3pt}{10pt}\selectfont\color{second}#1\par}}
 
-% Technical environment line (pass the label with its colon: "Environment:" / "Environnement\,:")
-\newcommand{\cvenv}[2]{%
-  \vspace{1.5pt}{\fontsize{8.3pt}{10.6pt}\selectfont\color{muted}{\mediumfont #1}\ #2\par}}
+% Technical environment as a chip row (the label is kept in the source, not printed)
+\newcommand{\cvenv}[2]{\par\vspace{2pt}\cvchips{#2}}
 
-% ---------- Skills rows ----------
-% \cvskill{Label}{content}
-\newcommand{\cvskill}[2]{%
-  \hangindent=3.3cm\hangafter=1
-  \makebox[3.3cm][l]{\headfont\color{accent}#1}#2\par\vspace{1.6pt}}
-
-% ---------- Education entry ----------
+% \cvedu{Degree}{School}{Place}{Dates}
 \newcommand{\cvedu}[4]{%
-  \vspace{3pt}
-  {\headfont\fontsize{10pt}{12.4pt}\selectfont #1}\hfill{\mediumfont\color{muted}\fontsize{8.6pt}{11pt}\selectfont #4}\par
-  {\mediumfont\color{accent}#2}{\color{muted}\enspace #3}\par
-}
+  \par\vspace{4pt}\leftskip=\datecol
+  \cv@date{#4}{\cv@titlefont #1 \,|\, #2\par}
+  {\cv@descfont #3\par}\vspace{1pt}}
+
+% Group heading for project lists (sits in the date column)
+\newcommand{\cvgroup}[1]{\par\vspace{5pt}{\leftskip=0pt\bfseries\fontsize{7.6pt}{9pt}\selectfont
+  \color{muted}\MakeUppercase{#1}\par}\leftskip=\datecol}
+
+\newcommand{\sep}{\enspace{\color{cvrule}|}\enspace}
 
 % ---------- Variant switch ----------
 % In a main file: \hwvarianttrue  -> Embedded Software & Hardware CV
@@ -132,8 +192,5 @@
 \newcommand{\SW}[1]{\ifhwvariant\else#1\fi}
 \newcommand{\FP}[1]{\iffpgavariant#1\fi}        % FPGA / SoC CV only
 \newcommand{\NF}[1]{\iffpgavariant\else#1\fi}   % every CV except FPGA / SoC
-
-% Group heading for project lists
-\newcommand{\cvgroup}[1]{\vspace{4pt}{\headfont\fontsize{9.6pt}{11.6pt}\selectfont\color{muted}#1}\par}
 
 \endinput

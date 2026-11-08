@@ -14,14 +14,18 @@ Six CVs built from one set of content blocks:
 ## Layout
 
 ```
-cvstyle.sty        layout: fonts, colours, section/entry macros, variant switch
+cvstyle.sty        layout: two columns, colours, sidebar and entry macros, variant switch
 en/blocks.tex      every CV block in English (written once)
 fr/blocks.tex      the same blocks in French
 cv-*-*.tex         the six main files: pick blocks and their order
-fonts/             Archivo static instances (SIL Open Font License, see fonts/OFL.txt)
 latexmkrc          tells latexmk / Overleaf to use XeLaTeX
 build.sh           builds all six PDFs into ./pdf (and copies them to ../assets/cv)
 ```
+
+Page layout: a tinted sidebar on the left (name, headline, focus chips, contact, languages, skills,
+certification) and a main column (summary, experience, projects, education) with dates in a narrow
+left column. Typeface: Latin Modern Roman (the fontspec default, with optical sizes); icons from
+`fontawesome5`. Both ship with TeX Live and Overleaf, so no font files are bundled.
 
 ## Compile
 
@@ -47,16 +51,23 @@ latexmk cv-sw-en.tex       # just one
   every CV except FPGA/SoC. Whole bullets work too: `\HW{\item ...}`.
 - **Dates, phone, availability:** `\forviadates`, `\phone`, `\availability`, `\iucplace`, `\iucdates`
   are defined near the top of each `blocks.tex`.
-- **Entry macros** (in `cvstyle.sty`):
+- **Sidebar macros** (in `cvstyle.sty`; the sidebar comes first, `\mainpart` switches to the main column):
+  - `\BlkHeader{Headline}{\focus{..}\focus{..}}` — name, headline, focus chips and contact (in `blocks.tex`)
+  - `\cvlang{Language}{level 0–5, halves allowed}{detail}` — a language with its dot rating
+  - `\cvskill{Group}{\chip{..}\chip[(detail)]{..}}` — a skill group; the optional detail prints in regular weight
+  - `\cvcert{text}` — a certification line
+- **Main-column macros:**
+  - `\cvsection{\faBuilding}{Title}` — a section heading with an icon (`\faCode`, `\faGraduationCap`, ...)
   - `\cventry{Role}{Organisation}{Location}{Dates}` — a job
   - `\cvsub{Title}` — a project inside a job
   - `\cvproject{Title}{Context}{Dates}{github.com/owner/repo or empty}`
-  - `\cvenv{Environment:}{tools...}` — the technical-environment line
-  - `\cvskill{Label}{content}` — a skills row
+  - `\cvenv{Environment:}{\chip{..}\chip{..}}` — the technical environment as a row of chips
+  - `\cvedu{Degree}{School}{Place}{Dates}`, `\cvgroup{Label}`, `\cvsummary{text}`
 - Keep each CV at two pages: after editing, check the page count (`pdfinfo pdf/<file>.pdf`).
 
 ## ATS notes
 
-Single column, real selectable text, no icons or text in images. The font's contextual alternates are
-switched off (`RawFeature={-calt}`) so that copied text keeps `C++`, `x86-64`, `J-Link` intact, and I²C
-is written with the Unicode superscript so it extracts as one word. Check with `pdftotext pdf/<file>.pdf -`.
+Real selectable text, no text in images. The two-column layout means some applicant-tracking systems
+read the sidebar and the main column interleaved; for a portal that parses CVs badly, paste the text
+into its form fields. I²C is written with the Unicode superscript so it extracts as one word.
+Check with `pdftotext pdf/<file>.pdf -`.
